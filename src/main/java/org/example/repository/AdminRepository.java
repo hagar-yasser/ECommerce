@@ -1,0 +1,14 @@
+package org.example.repository;
+
+import org.example.entity.Customer;
+
+import java.util.List;
+
+public interface AdminRepository {
+    List<Customer> showAllAdmins();
+
+    void addAdmin(Customer customer);
+
+    void deleteAdminById(int id);
+    void updateAdmin(int id ,Customer customer);
+}

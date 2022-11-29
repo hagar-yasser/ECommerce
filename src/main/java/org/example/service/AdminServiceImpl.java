@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.entity.Customer;
+import org.example.model.Customer;
 import org.example.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

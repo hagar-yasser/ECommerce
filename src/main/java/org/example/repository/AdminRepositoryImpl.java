@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import org.example.entity.Customer;
+import org.example.model.Customer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

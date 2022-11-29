@@ -16,9 +16,9 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="org.example.entity.Customer"/>
-        <mapping class="org.example.entity.Item"/>
-        <mapping class="org.example.entity.Order"/>
+        <mapping class="org.example.model.Customer"/>
+        <mapping class="org.example.model.Item"/>
+        <mapping class="org.example.model.Order"/>
 
 
     </session-factory>

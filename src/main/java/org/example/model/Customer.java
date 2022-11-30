@@ -6,8 +6,7 @@ import java.util.Set;
 
 @Entity
 public class Customer {
-    @Id
-    @GeneratedValue
+
     private int customerId;
     private String firstName;
     private String lastName;
@@ -16,10 +15,9 @@ public class Customer {
     private boolean isAdmin;
     private boolean isLoggedIn;
     private boolean isActivated;
-    @JoinTable(name = "customer_item",
-            joinColumns = { @JoinColumn(name = "fk_customer") },
-            inverseJoinColumns = { @JoinColumn(name = "fk_item") })
-    private Set<Item>shoppingCart=new HashSet<>();
+
+    private Set<CustomerItem>shoppingCart=new HashSet<>();
+    private Set<MyOrder> myOrders =new HashSet<>();
 
 
     private int wrongPasswordTrials;
@@ -36,7 +34,8 @@ public class Customer {
         this.isActivated = isActivated;
         this.wrongPasswordTrials = wrongPasswordTrials;
     }
-
+    @Id
+    @GeneratedValue
     public int getCustomerId() {
         return customerId;
     }
@@ -100,13 +99,21 @@ public class Customer {
     public void setActivated(boolean activated) {
         isActivated = activated;
     }
-
-    public Set<Item> getShoppingCart() {
+    @OneToMany(mappedBy = "customerItemId.customer",cascade = CascadeType.ALL)
+    public Set<CustomerItem> getShoppingCart() {
         return shoppingCart;
     }
 
-    public void setShoppingCart(Set<Item> shoppingCart) {
+    public void setShoppingCart(Set<CustomerItem> shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
+    public Set<MyOrder> getMyOrders() {
+        return myOrders;
+    }
+
+    public void setMyOrders(Set<MyOrder> myOrders) {
+        this.myOrders = myOrders;
     }
 
     public int getWrongPasswordTrials() {

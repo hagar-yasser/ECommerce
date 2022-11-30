@@ -18,7 +18,11 @@
         <property name="hbm2ddl.auto">update</property>
         <mapping class="org.example.model.Customer"/>
         <mapping class="org.example.model.Item"/>
-        <mapping class="org.example.model.Order"/>
+        <mapping class="org.example.model.MyOrder"/>
+        <mapping class="org.example.model.MyOrderItem"/>
+        <mapping class="org.example.model.MyOrderItemId"/>
+        <mapping class="org.example.model.CustomerItem"/>
+        <mapping class="org.example.model.CustomerItemId"/>
 
 
     </session-factory>

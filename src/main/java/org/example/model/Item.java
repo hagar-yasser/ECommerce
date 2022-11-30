@@ -1,13 +1,12 @@
 package org.example.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Item {
-    @Id
-    @GeneratedValue
+
     private int itemId;
     private int quantity;
     private String name;
@@ -15,6 +14,8 @@ public class Item {
     private double price;
     private int rating;
     private byte[] image;
+    private Set<CustomerItem>customerItems=new HashSet<>();
+    private Set<MyOrderItem> myOrderItems =new HashSet<>();
     public Item(){}
 
     public Item(int quantity, String name,
@@ -25,7 +26,8 @@ public class Item {
         this.price = price;
         this.rating = rating;
     }
-
+    @Id
+    @GeneratedValue
     public int getItemId() {
         return itemId;
     }
@@ -80,6 +82,22 @@ public class Item {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+    @OneToMany(mappedBy = "customerItemId.item",cascade = CascadeType.ALL)
+    public Set<CustomerItem> getCustomerItems() {
+        return customerItems;
+    }
+
+    public void setCustomerItems(Set<CustomerItem> customerItems) {
+        this.customerItems = customerItems;
+    }
+    @OneToMany(mappedBy = "myOrderItemId.item",cascade = CascadeType.ALL)
+    public Set<MyOrderItem> getMyOrderItems() {
+        return myOrderItems;
+    }
+
+    public void setMyOrderItems(Set<MyOrderItem> myOrderItems) {
+        this.myOrderItems = myOrderItems;
     }
 
     @Override

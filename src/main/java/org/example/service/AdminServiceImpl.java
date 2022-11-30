@@ -18,21 +18,25 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public List<Customer> showAllAdmins() {
+
         return adminRepository.showAllAdmins();
     }
 
     @Override
     public void addAdmin(Customer customer) {
+
         adminRepository.addAdmin(customer);
     }
 
     @Override
     public void deleteAdminById(int id) {
+
         adminRepository.deleteAdminById(id);
     }
 
     @Override
     public void updateAdmin(int id, Customer customer) {
+
         adminRepository.updateAdmin(id,customer);
     }
 }

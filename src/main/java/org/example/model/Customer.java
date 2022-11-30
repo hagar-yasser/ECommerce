@@ -9,11 +9,13 @@ public class Customer {
     @Id
     @GeneratedValue
     private int customerId;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
     private boolean isAdmin;
     private boolean isLoggedIn;
-    private boolean isVerified;
+    private boolean isActivated;
     @JoinTable(name = "customer_item",
             joinColumns = { @JoinColumn(name = "fk_customer") },
             inverseJoinColumns = { @JoinColumn(name = "fk_item") })
@@ -23,13 +25,15 @@ public class Customer {
     private int wrongPasswordTrials;
 
     public Customer(){}
-    public Customer(String email, String password, boolean isAdmin,
-                    boolean isLoggedIn, boolean isVerified, int wrongPasswordTrials) {
+    public Customer(String firstName, String lastName,
+                    String email, String password, boolean isAdmin, boolean isLoggedIn, boolean isActivated, int wrongPasswordTrials) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
         this.isLoggedIn = isLoggedIn;
-        this.isVerified = isVerified;
+        this.isActivated = isActivated;
         this.wrongPasswordTrials = wrongPasswordTrials;
     }
 
@@ -39,6 +43,22 @@ public class Customer {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -73,12 +93,20 @@ public class Customer {
         isLoggedIn = loggedIn;
     }
 
-    public boolean isVerified() {
-        return isVerified;
+    public boolean isActivated() {
+        return isActivated;
     }
 
-    public void setVerified(boolean verified) {
-        isVerified = verified;
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
+    public Set<Item> getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(Set<Item> shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     public int getWrongPasswordTrials() {
@@ -97,7 +125,7 @@ public class Customer {
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", isLoggedIn=" + isLoggedIn +
-                ", isVerified=" + isVerified +
+                ", isVerified=" + isActivated +
                 '}';
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.Locale;
 
-//@EnableWebMvc
+@EnableWebMvc
 @Configuration
 @ComponentScan("org.example")
 public class ShoppingServletConfig {

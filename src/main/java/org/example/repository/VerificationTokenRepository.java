@@ -49,7 +49,7 @@ public class VerificationTokenRepository {
         return userToken;
     }
 
-    public void save(VerificationTokenRepository newUserToken) {
+    public void save(VerificationToken newUserToken) {
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Customer.class)
                 .buildSessionFactory();

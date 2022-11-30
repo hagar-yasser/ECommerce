@@ -16,7 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "verification_token")
 public class VerificationToken {
     private static final int EXPIRATION = 60 * 24;
 
@@ -43,7 +42,6 @@ public class VerificationToken {
 
     public VerificationToken(final String token) {
         super();
-
         this.token = token;
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
@@ -98,6 +96,7 @@ public class VerificationToken {
         this.expiryDate = expiryDate;
     }
 
+    //Expiry date for verification order
     private Date calculateExpiryDate(int expiryTimeInMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Timestamp(calendar.getTime().getTime()));

@@ -1,6 +1,11 @@
 package org.example.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashSet;
@@ -47,7 +52,7 @@ public class Item {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
+    @NotNull
     public String getName() {
         return name;
     }
@@ -55,7 +60,7 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
-
+    @NotNull
     public String getCategory() {
         return category;
     }
@@ -71,7 +76,8 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
-
+    @Min(value = 0, message = "Rating should not be less than 0")
+    @Max(value = 5, message = "Rating should not be greater than 5")
     public int getRating() {
         return rating;
     }

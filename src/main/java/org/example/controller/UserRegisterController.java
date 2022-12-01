@@ -39,37 +39,41 @@ public class UserRegisterController {
     @RequestMapping("/register")
     public String registration(Model model) {
         model.addAttribute("user", new Customer());
-        return "registration";
+        return "register";
     }
 
     @RequestMapping("/register")
     public String addUser(@Valid @ModelAttribute("customer") Customer customer,
                           BindingResult bindingResult,Model model) {
+
         //check if there is user before used this email
-        Customer customer1 = new Customer();
-        String email = customer.getEmail();
+        Customer existingUser = userRegisterService.findByEmail(customer.getEmail());
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        customer1 = userRegisterService.findByEmail(email);
-        if(customer1!=null) {
-            model.addAttribute("error","There is already an account with this email:" + email);
+
+        if(existingUser!=null) {
+            model.addAttribute("error","There is already an account with this email:" + customer.getEmail());
             return "/registration";
         }else {
             userRegisterService.registerUser(customer);
             VerificationToken verificationToken = new VerificationToken(customer);
             verificationTokenRepository.save(verificationToken);
 
+
+            //with properties
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(customer.getEmail());
             mailMessage.setSubject("Complete Registration process please!!!");
             mailMessage.setFrom("anasroshdiii@gmail.com");//later we can take it from admin findByEmail
             mailMessage.setText("To confirm your account, please click here : "
                     +"http://localhost:8082/verifyAccount?token="+verificationToken.getToken());
-
             emailSenderService.sendEmail(mailMessage);
-            model.addAttribute("emailId", customer.getEmail());
-            return "redirect:/confirm-account";
+
+
+
+            model.addAttribute("email", customer.getEmail());
+            return "redirect:/registrationSuccess";
         }
 
     }
@@ -87,9 +91,8 @@ public class UserRegisterController {
         else
         {
             model.addAttribute("message","The link is invalid or broken!");
-            return "error";
+            return "errorInVerification";
         }
-
         return "verifyAccount";
     }
 

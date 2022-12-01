@@ -25,6 +25,11 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
+    public void setLoggedOut(int id) {
+        loginRepository.setLoggedOut(id);
+    }
+
+    @Override
     public void deActivateUser(int id) {
         loginRepository.deActivateUser(id);
     }

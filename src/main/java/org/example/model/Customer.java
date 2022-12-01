@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +14,11 @@ public class Customer {
     private String lastName;
     private String email;
     private String password;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isAdmin;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isLoggedIn;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isActivated;
 
     private Set<CustomerItem>shoppingCart=new HashSet<>();
@@ -76,28 +81,28 @@ public class Customer {
         this.password = password;
     }
 
-    public boolean isAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
-    public boolean isLoggedIn() {
+    public boolean getIsLoggedIn() {
         return isLoggedIn;
     }
 
-    public void setLoggedIn(boolean loggedIn) {
-        isLoggedIn = loggedIn;
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
     }
 
-    public boolean isActivated() {
+    public boolean getIsActivated() {
         return isActivated;
     }
 
-    public void setActivated(boolean activated) {
-        isActivated = activated;
+    public void setIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
     }
     @OneToMany(mappedBy = "customerItemId.customer",cascade = CascadeType.ALL)
     public Set<CustomerItem> getShoppingCart() {

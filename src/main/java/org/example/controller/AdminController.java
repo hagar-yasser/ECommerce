@@ -33,12 +33,15 @@ public class AdminController {
 
     @GetMapping("/addAdmin")
     public String showFormForAdd(Model model) {
-        model.addAttribute("customer", new Customer());
+        Customer customer = new Customer();
+        customer.setIsAdmin(true);
+        model.addAttribute("admin", customer);
         return "addAdmin"; //the view that has the form to add admin
     }
 
     @RequestMapping(value = "addAdmin", method = RequestMethod.POST)
     public String addAdmin(@ModelAttribute("admin") Customer admin) {
+        admin.setIsAdmin(true);
         adminService.addAdmin(admin);
         return "redirect:/shopping/admin/showAllAdmins";
     }

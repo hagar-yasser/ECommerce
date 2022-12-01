@@ -20,7 +20,9 @@ public class AdminRepositoryImpl implements AdminRepository{
         Session session = sessionFactory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
-            List<Customer> listOfAdmins = session.createQuery("from Customer where isAdmin=true").list();
+            Query query = session.createQuery("FROM Customer WHERE isAdmin= :isAdmin ");
+            query.setParameter("isAdmin", true);
+            List<Customer> listOfAdmins = query.list();
             transaction.commit();
             return listOfAdmins;
         }finally {
@@ -54,7 +56,7 @@ public class AdminRepositoryImpl implements AdminRepository{
         Session session = sessionFactory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
-            Query query =session.createQuery("delete from Customer where id =:id");
+            Query query =session.createQuery("delete from Customer where customerId = :id");
             query.setParameter("id",id);
             query.executeUpdate();
             transaction.commit();
@@ -73,11 +75,13 @@ public class AdminRepositoryImpl implements AdminRepository{
         Session session = sessionFactory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
-            Query query =session.createQuery("update Customer set email=:email , password=:password ,isAdmin=:isAdmin where id= :id");
+            Query query =session.createQuery("update Customer set firstName= :firstName , lastName= :lastName, email= :email , password= :password ,isAdmin= :isAdmin where customerId= :id");
+            query.setParameter("firstName",customer.getFirstName());
+            query.setParameter("lastName",customer.getLastName());
             query.setParameter("email",customer.getEmail());
             query.setParameter("password",customer.getPassword());
-            query.setParameter("isAdmin",customer.isAdmin());
-            query.setParameter("id",id);
+            query.setParameter("isAdmin",customer.getIsAdmin());
+            query.setParameter("customerId",id);
             query.executeUpdate();
             transaction.commit();
             System.out.println("Updated Done!!!");

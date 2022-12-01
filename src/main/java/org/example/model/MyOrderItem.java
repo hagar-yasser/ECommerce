@@ -10,7 +10,7 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name = "item_id")) })
 public class MyOrderItem {
 
-    private MyOrderItemId myOrderItemId;
+    private MyOrderItemId myOrderItemId=new MyOrderItemId();
     private int quantity;
     @EmbeddedId
     public MyOrderItemId getMyOrderItemId() {

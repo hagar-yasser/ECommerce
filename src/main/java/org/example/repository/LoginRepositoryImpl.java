@@ -42,8 +42,25 @@ public class LoginRepositoryImpl implements LoginRepository{
         Session session = sessionFactory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
-            Query query =session.createQuery("update Customer set isLoggedIn= :isLoggedIn where customerId= :id");
+            Query query =session.createQuery("update Customer set isLoggedIn= :isLoggedIn , wrongPasswordTrials=0 where customerId= :id");
             query.setParameter("isLoggedIn", true);
+            query.setParameter("id",id);
+            query.executeUpdate();
+            transaction.commit();
+        }finally {
+            sessionFactory.close();
+            session.close();
+        }
+    }
+    public void setLoggedOut(int id) {
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Customer.class)
+                .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        try {
+            Transaction transaction = session.beginTransaction();
+            Query query =session.createQuery("update Customer set isLoggedIn= :isLoggedIn where customerId= :id");
+            query.setParameter("isLoggedIn", false);
             query.setParameter("id",id);
             query.executeUpdate();
             transaction.commit();

@@ -22,9 +22,15 @@ public class MyOrderController {
         return "submitOrderForm";
     }
     @PostMapping("/submitOrder")
-    public String submitOrder(@ModelAttribute("customerIdDTO") CustomerIdDTO customerIdDTO){
-        myOrderService.submitOrder(customerIdDTO.getCustomerId());
-        return "done";
+    public String submitOrder(@ModelAttribute("customerIdDTO") CustomerIdDTO customerIdDTO,Model model){
+        try {
+            myOrderService.submitOrder(customerIdDTO.getCustomerId());
+            return "done";
+        }
+        catch (Exception e){
+            model.addAttribute("message",e.getMessage());
+            return "error";
+        }
     }
 
 }

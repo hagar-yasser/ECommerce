@@ -11,4 +11,5 @@ public interface AdminRepository {
 
     void deleteAdminById(int id);
     void updateAdmin(int id ,Customer customer);
+    Customer getCustomerById(int id);
 }

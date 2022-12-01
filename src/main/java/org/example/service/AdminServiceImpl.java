@@ -39,4 +39,9 @@ public class AdminServiceImpl implements AdminService{
 
         adminRepository.updateAdmin(id,customer);
     }
+    public Customer getCustomerById(int id){
+
+        return adminRepository.getCustomerById(id);
+
+    }
 }

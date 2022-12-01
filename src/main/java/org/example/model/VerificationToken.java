@@ -4,6 +4,7 @@ package org.example.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,11 +21,11 @@ public class VerificationToken {
     private static final int EXPIRATION = 60 * 24;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name="token")
-    private String token;
+    private String verficationToken;
 
     @OneToOne(targetEntity = Customer.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -40,21 +41,22 @@ public class VerificationToken {
         super();
     }
 
-    public VerificationToken(final String token) {
-        super();
-        this.token = token;
-        this.expiryDate = calculateExpiryDate(EXPIRATION);
-    }
-
-    public VerificationToken(final String token, final Customer customer) {
-        super();
+    public VerificationToken(Customer customer) {
         Calendar calendar = Calendar.getInstance();
-
-        this.token = token;
         this.customer = customer;
-        this.createdDate = new Date(calendar.getTime().getTime());
-        this.expiryDate = calculateExpiryDate(EXPIRATION);
+        createdDate = new Date(calendar.getTime().getTime());
+        verficationToken = UUID.randomUUID().toString();
     }
+
+//    public VerificationToken(final String token, final Customer customer) {
+//        super();
+//        Calendar calendar = Calendar.getInstance();
+//
+//        this.token = token;
+//        this.customer = customer;
+//        this.createdDate = new Date(calendar.getTime().getTime());
+//        this.expiryDate = calculateExpiryDate(EXPIRATION);
+//    }
 
     public int getId() {
         return id;
@@ -65,11 +67,11 @@ public class VerificationToken {
     }
 
     public String getToken() {
-        return token;
+        return verficationToken;
     }
 
     public void setToken(final String token) {
-        this.token = token;
+        this.verficationToken = token;
     }
 
     public Customer getUser() {

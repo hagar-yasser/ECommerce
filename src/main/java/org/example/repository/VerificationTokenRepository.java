@@ -11,7 +11,9 @@ import org.hibernate.query.Query;
 
 public class VerificationTokenRepository {
 
-    public VerificationToken findByToken(String token) {
+    //need a function to save a verification token in database
+
+    public VerificationToken findByVerificationToken(String token) {
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Customer.class)
                 .buildSessionFactory();

@@ -8,11 +8,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRegisterRepository {
+
+    private JavaMailSender javaMailSender;
 
     public Customer findByEmail(String email){
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")

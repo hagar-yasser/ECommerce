@@ -53,10 +53,18 @@ public class AdminController {
     }
 
     //not completed
-    @RequestMapping("/updateAdmin/{id}")
-    public String updateAdmin(@PathVariable("id") int id, Model model){
-//        model.addAttribute("person", this.personService.getPersonById(id));
-//        model.addAttribute("listPersons", this.personService.listPersons());
-        return "person";
+//    @RequestMapping("/updateAdmin/{id}")
+//    public String updateAdmin(@PathVariable("id") int id, Model model){
+////        model.addAttribute("person", this.personService.getPersonById(id));
+////        model.addAttribute("listPersons", this.personService.listPersons());
+//        return "person";
+//    }
+
+    @GetMapping("/updateForm")
+    public String showFormForUpdate(@RequestParam("customerId") int id,
+                                    Model model) {
+        Customer customer = adminService.getCustomerById(id);
+        model.addAttribute("admin", customer);
+        return "addAdmin";
     }
 }

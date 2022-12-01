@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.model.Customer;
+import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -81,7 +82,7 @@ public class AdminRepositoryImpl implements AdminRepository{
             query.setParameter("email",customer.getEmail());
             query.setParameter("password",customer.getPassword());
             query.setParameter("isAdmin",customer.getIsAdmin());
-            query.setParameter("customerId",id);
+            query.setParameter("id",id);
             query.executeUpdate();
             transaction.commit();
             System.out.println("Updated Done!!!");
@@ -89,5 +90,28 @@ public class AdminRepositoryImpl implements AdminRepository{
             sessionFactory.close();
             session.close();
         }
+    }
+
+    @Override
+    public Customer getCustomerById(int id) {
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Customer.class)
+                .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        Customer customer = null;
+        try {
+            Transaction transaction = session.beginTransaction();
+            Query<Customer> query = session.createQuery("FROM Customer WHERE customerId = :id" , Customer.class);
+            session.setCacheMode(CacheMode.IGNORE);
+            query.setParameter("id",id);
+            customer = query.getSingleResult();
+            transaction.commit();
+        }catch (Exception e) {
+            customer = null;
+        }finally {
+            sessionFactory.close();
+            session.close();
+        }
+        return customer;
     }
 }

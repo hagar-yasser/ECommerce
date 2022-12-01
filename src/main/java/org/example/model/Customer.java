@@ -3,6 +3,8 @@ package org.example.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,11 +17,11 @@ public class Customer {
     private String email;
     private String password;
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean isAdmin;
+    private boolean isAdmin=false;
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean isLoggedIn;
+    private boolean isLoggedIn=false;
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean isActivated;
+    private boolean isActivated=false;
 
     private Set<CustomerItem>shoppingCart=new HashSet<>();
     private Set<MyOrder> myOrders =new HashSet<>();
@@ -48,7 +50,7 @@ public class Customer {
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
-
+    @NotNull
     public String getFirstName() {
         return firstName;
     }
@@ -56,7 +58,7 @@ public class Customer {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
+    @NotNull
     public String getLastName() {
         return lastName;
     }
@@ -64,7 +66,7 @@ public class Customer {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
+    @Email
     public String getEmail() {
         return email;
     }
@@ -72,7 +74,7 @@ public class Customer {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @NotNull
     public String getPassword() {
         return password;
     }

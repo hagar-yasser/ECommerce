@@ -53,18 +53,16 @@ public class AdminController {
     }
 
     //not completed
-//    @RequestMapping("/updateAdmin/{id}")
-//    public String updateAdmin(@PathVariable("id") int id, Model model){
-////        model.addAttribute("person", this.personService.getPersonById(id));
-////        model.addAttribute("listPersons", this.personService.listPersons());
-//        return "person";
-//    }
-
-    @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("customerId") int id,
+    @RequestMapping(value="updateForm/{id}",method = RequestMethod.GET)
+    public String showFormForUpdate(@PathVariable int id,
                                     Model model) {
         Customer customer = adminService.getCustomerById(id);
         model.addAttribute("admin", customer);
-        return "addAdmin";
+        return "updateForm"; //show the view with the  data to be updated
+    }
+    @RequestMapping(value = "updateForm/{id}", method = RequestMethod.POST)
+    public String showFormForUpdate(@PathVariable int id , @ModelAttribute("admin") Customer admin) {
+        adminService.updateAdmin(id, admin);
+        return "redirect:/shopping/admin/showAllAdmins";
     }
 }

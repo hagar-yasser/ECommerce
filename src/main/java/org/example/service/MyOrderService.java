@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -33,7 +34,7 @@ public class MyOrderService {
         this.customerRepository=customerRepository;
     }
 
-    public MyOrder submitOrder(int customerId){
+    public MyOrder submitOrder(int customerId) throws Exception {
         MyOrder newOrder=new MyOrder();
         try(Session session=sessionFactory.openSession()){
             Transaction transaction=session.beginTransaction();
@@ -41,12 +42,17 @@ public class MyOrderService {
             if(shoppingCart!=null&&shoppingCart.size()>0) {
                 customerItemRepository.deleteShoppingCartOfCustomer(customerId, session);
                 newOrder.setOwner(customerRepository.getCustomer(customerId, session));
+                newOrder.setMyOrderDate(LocalDate.now());
                 newOrder = myOrderRepository.createNewMyOrder(newOrder, session);
                 myOrderItemRepository.addCustomerItemsInOrderItems(newOrder.getMyOrderId(), shoppingCart, session);
             }
             transaction.commit();
+            return newOrder;
+        }
+        catch (Exception e){
+            throw new Exception("couldn't create an order with items in the shopping cart");
         }
 
-        return newOrder;
+
     }
 }

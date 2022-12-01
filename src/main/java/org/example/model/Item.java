@@ -1,6 +1,8 @@
 package org.example.model;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +15,9 @@ public class Item {
     private String category;
     private double price;
     private int rating;
+
     private byte[] image;
+    private String imageUrlForJSP;
     private Set<CustomerItem>customerItems=new HashSet<>();
     private Set<MyOrderItem> myOrderItems =new HashSet<>();
     public Item(){}
@@ -75,7 +79,8 @@ public class Item {
     public void setRating(int rating) {
         this.rating = rating;
     }
-
+    @Lob
+    @Column(columnDefinition="BLOB")
     public byte[] getImage() {
         return image;
     }
@@ -98,6 +103,15 @@ public class Item {
 
     public void setMyOrderItems(Set<MyOrderItem> myOrderItems) {
         this.myOrderItems = myOrderItems;
+    }
+    @Transient
+    public String getImageUrlForJSP(){
+        return "data:image/png;base64," + Base64.getEncoder().encodeToString(getImage());
+
+    }
+
+    public void setImageUrlForJSP(String imageUrlForJSP) {
+        this.imageUrlForJSP = imageUrlForJSP;
     }
 
     @Override

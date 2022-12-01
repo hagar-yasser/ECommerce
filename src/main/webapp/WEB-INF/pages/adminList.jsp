@@ -38,6 +38,7 @@
                 <td>${user.wrongPasswordTrials}</td>
                 <td>
                    <a href="${pageContext.request.contextPath }/shopping/admin/deleteAdmin/${user.customerId }" onclick="return confirm('Are you sure?')">Delete</a>
+                   | <a href="${pageContext.request.contextPath }/shopping/admin/updateForm/${user.customerId }">Update</a>
                 </td>
             </tr>
         </c:forEach>

@@ -1,5 +1,9 @@
 package org.example.config;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +27,14 @@ public class ShoppingServletConfig {
         viewResolver.setPrefix("/WEB-INF/pages/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
+    }
+    @Bean
+    public StandardServiceRegistry standardServiceRegistry(){
+        return new StandardServiceRegistryBuilder().configure().build();
+    }
+    @Bean
+    public SessionFactory sessionFactory(){
+        return new MetadataSources(standardServiceRegistry()).buildMetadata().buildSessionFactory();
     }
 
 }

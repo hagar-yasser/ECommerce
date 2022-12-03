@@ -41,7 +41,7 @@
                 <td></td>
 
                 <td>
-                    <a href="${pageContext.request.contextPath }/shopping/Cart/1/addItem/" onclick=>Add to Cart</a>
+                    <a href="${pageContext.request.contextPath }/shopping/Cart/1/addItem/${item.itemId}" onclick=>Add to Cart</a>
                 </td>
 
 

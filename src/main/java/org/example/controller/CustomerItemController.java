@@ -42,15 +42,15 @@ public class CustomerItemController {
     }
 
 
-    @RequestMapping(value = "/{customerId}/addItem/", method = RequestMethod.GET)
-    public String addItemToCart( @ModelAttribute Item item, int  customerId ) {
+    @RequestMapping(value = "/{customerId}/addItem/{itemId}", method = RequestMethod.GET)
+    public String addItemToCart( @PathVariable int itemId,@PathVariable int  customerId ) {
 
-        if (customerItemService.isItemInShoppingCart ( customerId, item.getItemId() ))
+        if (customerItemService.isItemInShoppingCart ( customerId, itemId))
         {
-            customerItemService.updateQuantityCustomerItem( customerId,item.getItemId() );
+            customerItemService.updateQuantityCustomerItem( customerId,itemId);
         }
         else {
-            customerItemService.addToCustomerItem(customerId,item.getItemId());
+            customerItemService.addToCustomerItem(customerId,itemId);
         }
         return "redirect:/shopping/Cart/showAll/{customerId}";
     }

@@ -24,6 +24,10 @@
 				<td>&nbsp;</td>
 				<td><input type="submit" value="Login"></td>
 			</tr>
+			<tr>
+            	<td>&nbsp;</td>
+            	<td><a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Register" /></a></td>
+            </tr>
 		</table>
 	</form>
 

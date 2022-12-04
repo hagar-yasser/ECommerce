@@ -36,13 +36,15 @@
         </div>
         <div class="from-row">
              <label for="password">PassWord</label>
-             <form:input path="password" cssClass="form-control" id="password"/>
+             <form:input path="password" type="password" cssClass="form-control" id="password"/>
              <form:errors path="password" cssClass="error"/>
         </div>
 
         <br>
-        <input type="submit" value="add Admin">
+        <input class="btn btn-primary" type="submit" value="add Admin">
     </form:form>
+    <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
+
 
 </div>
 </body>

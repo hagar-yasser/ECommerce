@@ -31,6 +31,17 @@ public class ItemService {
         }
 
     }
+    public Item getItemById(int itemId) throws Exception {
+        try(Session session=sessionFactory.openSession()){
+            Transaction transaction=session.beginTransaction();
+            Item item=itemRepository.getItemById(itemId,session);
+            transaction.commit();
+            return item;
+        }
+        catch (Exception e){
+            throw new Exception("Couldn't get Items By Id from the database");
+        }
+    }
     public List<Item> getItemsByName(String name) throws Exception {
         List<Item> itemsByName=new ArrayList<>();
         try(Session session=sessionFactory.openSession()){
@@ -83,5 +94,37 @@ public class ItemService {
             throw new Exception("Couldn't get Items By Price from the database");
         }
 
+    }
+    public Item addItem(Item item) throws Exception {
+        try(Session session=sessionFactory.openSession()){
+            Transaction transaction=session.beginTransaction();
+            itemRepository.addItem(item,session);
+            transaction.commit();
+            return item;
+        }
+        catch (Exception e){
+            throw new Exception("Couldn't add Item to database");
+        }
+    }
+    public void deleteItem(int itemId) throws Exception {
+        try(Session session=sessionFactory.openSession()){
+            Transaction transaction=session.beginTransaction();
+            Item item=session.load(Item.class,itemId);
+            itemRepository.deleteItem(item,session);
+            transaction.commit();
+        }
+        catch (Exception e){
+            throw new Exception("Couldn't remove Item from database");
+        }
+    }
+    public void updateItem(Item item) throws Exception {
+        try(Session session=sessionFactory.openSession()){
+            Transaction transaction=session.beginTransaction();
+            itemRepository.updateItem(item,session);
+            transaction.commit();
+        }
+        catch (Exception e){
+            throw new Exception("Couldn't remove Item from database");
+        }
     }
 }

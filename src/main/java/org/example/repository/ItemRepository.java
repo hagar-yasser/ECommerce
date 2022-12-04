@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ItemRepository {
     public Item addItem(Item item, Session session);
+    public void deleteItem(Item item ,Session session);
+    public void updateItem(Item item, Session session);
     public List<Item>getAllItems(Session session);
     public List<Item>getItemsByName(String name,Session session);
     public List<Item>getItemsByCategory(String category,Session session);

@@ -18,6 +18,21 @@ public class ItemRepositoryImpl implements ItemRepository {
         session.save(item);
         return item;
     }
+    public void deleteItem(Item item,Session session){
+        session.delete(item);
+    }
+
+    @Override
+    public void updateItem(Item item, Session session) {
+        Item item2=session.load(Item.class,item.getItemId());
+        item2.setQuantity(item.getQuantity());
+        item2.setName(item.getName());
+        item2.setRating(item.getRating());
+        item2.setImage(item.getImage());
+        item2.setPrice(item.getPrice());
+        item2.setCategory(item.getCategory());
+        session.save(item2);
+    }
 
     @Override
     public List<Item> getAllItems(Session session) {
@@ -61,5 +76,31 @@ public class ItemRepositoryImpl implements ItemRepository {
         itemsByPriceQuery.setParameter("price",price);
         itemsByPrice=itemsByPriceQuery.list();
         return itemsByPrice;
+    }
+
+    @Override
+    public Item getItemById(int itemId,Session session) {
+        Query getItemByIdQuery=session.createQuery("from Item where itemId = :itemId",Item.class);
+        getItemByIdQuery.setParameter("itemId",itemId);
+        return (Item)getItemByIdQuery.getSingleResult();
+    }
+
+    @Override
+    public boolean decrementItemQuantity(int itemId, int decrementCounter,Session session) {
+        Item item=getItemById(itemId,session);
+        if(item.getQuantity()<decrementCounter){
+            return false;
+        }
+        item.setQuantity(item.getQuantity()-decrementCounter);
+        session.save(item);
+        return true;
+
+    }
+
+    @Override
+    public Item getItemById(int itemId, Session session) {
+        return session.load(Item.class,itemId);
+
+
     }
 }

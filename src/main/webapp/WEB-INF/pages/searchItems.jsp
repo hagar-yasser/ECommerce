@@ -64,10 +64,13 @@
                <td><input class="form-control" type="text" name="price"/></td>
                <td><input class="btn btn-primary" type="submit" value="Filter Items By Price" /></td>
                </tr>
+
                </form>
                         </tbody>
 
                </table>
+
+               <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 
 
     </body>

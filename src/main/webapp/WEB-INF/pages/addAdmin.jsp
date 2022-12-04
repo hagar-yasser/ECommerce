@@ -36,7 +36,7 @@
         </div>
         <div class="from-row">
              <label for="password">PassWord</label>
-             <form:input path="password" cssClass="form-control" id="password"/>
+             <form:input path="password" type="password" cssClass="form-control" id="password"/>
              <form:errors path="password" cssClass="error"/>
         </div>
 

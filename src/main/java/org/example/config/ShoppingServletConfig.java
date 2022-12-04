@@ -11,6 +11,8 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -20,7 +22,7 @@ import java.util.Locale;
 @EnableWebMvc
 @Configuration
 @ComponentScan("org.example")
-public class ShoppingServletConfig {
+public class ShoppingServletConfig implements WebMvcConfigurer {
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -36,5 +38,13 @@ public class ShoppingServletConfig {
     public SessionFactory sessionFactory(){
         return new MetadataSources(standardServiceRegistry()).buildMetadata().buildSessionFactory();
     }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // front resource.
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/").setCachePeriod(31556926);
 
+
+
+    }
 }

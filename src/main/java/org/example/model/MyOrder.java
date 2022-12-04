@@ -61,7 +61,6 @@ public class MyOrder {
                 "orderId=" + myOrderId +
                 ", orderDate=" + MyOrderDate +
                 ", owner=" + owner +
-                ", orderedItems=" + myOrderedItems +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.dto.CustomerIdDTO;
+import org.example.model.Customer;
 import org.example.model.MyOrder;
 import org.example.service.MyOrderService;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/orders/")
 public class MyOrderController {
@@ -16,15 +19,20 @@ public class MyOrderController {
     public MyOrderController(MyOrderService myOrderService) {
         this.myOrderService = myOrderService;
     }
-    @GetMapping("/submitOrder")
-    public String getSubmitOrderForm(Model model){
-        model.addAttribute("customerIdDTO",new CustomerIdDTO());
-        return "submitOrderForm";
-    }
+//    @GetMapping("/submitOrder")
+//    public String getSubmitOrderForm(Model model){
+//
+//        model.addAttribute("customerIdDTO",new CustomerIdDTO());
+//        return "submitOrderForm";
+//    }
     @PostMapping("/submitOrder")
-    public String submitOrder(@ModelAttribute("customerIdDTO") CustomerIdDTO customerIdDTO,Model model){
+    public String submitOrder(Model model, HttpSession session){
+        Customer customer=(Customer) session.getAttribute("customer");
+        if(customer==null){
+            return "redirect:/shopping/login/login";
+        }
         try {
-            myOrderService.submitOrder(customerIdDTO.getCustomerId());
+            myOrderService.submitOrder(customer.getCustomerId());
             return "done";
         }
         catch (Exception e){

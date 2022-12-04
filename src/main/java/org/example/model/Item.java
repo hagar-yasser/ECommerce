@@ -1,6 +1,13 @@
 package org.example.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +20,9 @@ public class Item {
     private String category;
     private double price;
     private int rating;
+
     private byte[] image;
+    private String imageUrlForJSP;
     private Set<CustomerItem>customerItems=new HashSet<>();
     private Set<MyOrderItem> myOrderItems =new HashSet<>();
     public Item(){}
@@ -43,7 +52,7 @@ public class Item {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
+    @NotNull
     public String getName() {
         return name;
     }
@@ -51,7 +60,7 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
-
+    @NotNull
     public String getCategory() {
         return category;
     }
@@ -67,7 +76,8 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
-
+    @Min(value = 0, message = "Rating should not be less than 0")
+    @Max(value = 5, message = "Rating should not be greater than 5")
     public int getRating() {
         return rating;
     }
@@ -75,7 +85,8 @@ public class Item {
     public void setRating(int rating) {
         this.rating = rating;
     }
-
+    @Lob
+    @Column(columnDefinition="BLOB")
     public byte[] getImage() {
         return image;
     }
@@ -98,6 +109,15 @@ public class Item {
 
     public void setMyOrderItems(Set<MyOrderItem> myOrderItems) {
         this.myOrderItems = myOrderItems;
+    }
+    @Transient
+    public String getImageUrlForJSP(){
+        return "data:image/png;base64," + Base64.getEncoder().encodeToString(getImage());
+
+    }
+
+    public void setImageUrlForJSP(String imageUrlForJSP) {
+        this.imageUrlForJSP = imageUrlForJSP;
     }
 
     @Override

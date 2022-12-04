@@ -22,7 +22,10 @@
         <td>PRICE</td>
         <td>RATING</td>
         <td>IMAGE</td>
+<<<<<<< HEAD
         <td>QUANTITY</td>
+=======
+>>>>>>> 1886224aef4bbc91fc8de307c375c27c831ac724
         <td>ACTION</td>
 
 
@@ -40,6 +43,12 @@
                 <td>${item.category}</td>
                 <td>${item.price}</td>
                 <td>${item.rating}</td>
+<<<<<<< HEAD
+=======
+                <td>${item.quantity}</td>
+
+
+>>>>>>> 1886224aef4bbc91fc8de307c375c27c831ac724
                 <td></td>
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
@@ -51,7 +60,10 @@
 
 
 
+<<<<<<< HEAD
                 <td><input class="btn btn-primary" type="submit" value="add to cart" /></td>
+=======
+>>>>>>> 1886224aef4bbc91fc8de307c375c27c831ac724
                 <c:if test="${item.image!=null}">
                     <td>${item.image}</td>
                 </c:if>

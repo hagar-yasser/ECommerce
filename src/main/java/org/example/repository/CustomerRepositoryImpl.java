@@ -16,6 +16,10 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
     @Override
     public Customer getCustomer(int customerId,Session session) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1886224aef4bbc91fc8de307c375c27c831ac724
         return session.load(Customer.class,customerId);
     }
 }

@@ -37,7 +37,7 @@
                 <td>${customerItem.getQuantity()}</td>
                 <td>${(customerItem.getCustomerItemId().getItem().getPrice()) * (customerItem.getQuantity())}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath }/shopping/Cart/delete/${customerItem.getCustomerItemId().getCustomer().getCustomerId()}/${customerItem.getCustomerItemId().getItem().getItemId()}" >Delete</a>
+                        <a href="${pageContext.request.contextPath }/shopping/Cart/delete/${customerItem.getCustomerItemId().getItem().getItemId()}" >Delete</a>
                     </td>
 
             </tr>
@@ -59,18 +59,22 @@
  </tbody>
 
 </table>
-<b>
-<a href="${pageContext.request.contextPath }/shopping/Cart/deleteCart/${custometrId}" onclick="return confirm('Are you sure to clear your Cart')">Delete Cart</a>
-</b>
     <br>
 <b>
-<a href="${pageContext.request.contextPath }/shopping/items/all" >continue Shopping</a>
+    <h1>
+        <b>
+            <a href="${pageContext.request.contextPath }/shopping/Cart/deleteCart/${custometrId}" onclick="return confirm('Are you sure to clear your Cart')">Delete Cart</a>
+        </b>
+        TOTAL PRICE = ${totalPrice} EGP
+        <br>
+    <a href="${pageContext.request.contextPath }/shopping/items/all" >continue Shopping</a>
+        <br>
+        <a href="${pageContext.request.contextPath }/shopping/orders/submitOrder/" >check out</a>
+
+    </h1>
 </b>
 <br>
 <b>
-
-    <a href="" >check out</a>
-</b>
 
 </body>
 </html>

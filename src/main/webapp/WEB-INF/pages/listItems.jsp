@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<<<<<<< HEAD
 
-=======
->>>>>>> dev
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +21,8 @@
         <td>CATEGORY</td>
         <td>PRICE</td>
         <td>RATING</td>
-        <td>QUANTITY</td>
         <td>IMAGE</td>
+        <td>QUANTITY</td>
         <td>ACTION</td>
 
 
@@ -36,30 +33,30 @@
 
     <c:if test="${!empty itemsList}">
         <c:forEach var="item" items="${itemsList}">
+            <form method="post" action="${pageContext.request.contextPath }/shopping/Cart/addItem/${item.itemId}">
             <tr>
                 <td>${item.itemId}</td>
                 <td>${item.name}</td>
                 <td>${item.category}</td>
                 <td>${item.price}</td>
                 <td>${item.rating}</td>
-                <td>${item.quantity}</td>
+                <td></td>
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
+                </c:if>
 
+<%--                <td> <input type="text" id="quantity" name ="quantity"> </td>--%>
 
-                <td></td>
-
-                <td>
-                    <a href="${pageContext.request.contextPath }/shopping/Cart/1/addItem/${item.itemId}" onclick=>Add to Cart</a>
-                </td>
+                <td><input class="form-control" type="number" name="quantity"/></td>
 
 
 
+                <td><input class="btn btn-primary" type="submit" value="add to cart" /></td>
                 <c:if test="${item.image!=null}">
                     <td>${item.image}</td>
                 </c:if>
-
             </tr>
+            </form>
         </c:forEach>
 
     </c:if>
@@ -68,9 +65,7 @@
 </table>
 </div>
 </div>
-<%
 
-%>
 
 </body>
 </html>

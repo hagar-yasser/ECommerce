@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body class="container">
+    <h1>Items</h1>
 
+
+ <div class="card">
+       <div class="card-body">
 <table class="table">
     <thead class="table table-dark">
     <tr>
@@ -44,6 +48,8 @@
     </tbody>
 
 </table>
+</div>
+</div>
 <%
 
 %>

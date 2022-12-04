@@ -62,4 +62,21 @@ public class ItemRepositoryImpl implements ItemRepository {
         itemsByPrice=itemsByPriceQuery.list();
         return itemsByPrice;
     }
+
+    @Override
+    public Item getItemById(int itemId,Session session) {
+        return session.load(Item.class,itemId);
+    }
+
+    @Override
+    public boolean decrementItemQuantity(int itemId, int decrementCounter,Session session) {
+        Item item=getItemById(itemId,session);
+        if(item.getQuantity()<decrementCounter){
+            return false;
+        }
+        item.setQuantity(item.getQuantity()-decrementCounter);
+        session.save(item);
+        return true;
+
+    }
 }

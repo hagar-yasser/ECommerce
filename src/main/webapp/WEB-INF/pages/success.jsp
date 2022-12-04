@@ -13,7 +13,7 @@
 	<h3>Success Page</h3>
 	Welcome ${sessionScope.customer.firstName }
 	<br>
-	<a href="${pageContext.request.contextPath }/shopping/login/logout">Logout</a>
+	<a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 
 </body>
 </html>

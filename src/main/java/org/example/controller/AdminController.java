@@ -89,9 +89,7 @@ public class AdminController {
             return "error";
         }
     }
-
-    //not completed
-    @RequestMapping(value = "updateForm/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="updateForm/{id}",method = RequestMethod.GET)
     public String showFormForUpdate(@PathVariable int id,
                                     Model model, HttpSession session) {
         if (session.getAttribute("customer") == null) {

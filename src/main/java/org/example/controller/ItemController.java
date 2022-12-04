@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -21,12 +22,18 @@ public class ItemController {
     }
 
     @GetMapping("/")
-    public String getSearchItemsForm() {
+    public String getSearchItemsForm(HttpSession session) {
+        if(session.getAttribute("customer")==null) {
+            return "redirect:/shopping/login/login";
+        }
         return "searchItems";
     }
 
     @GetMapping("/all")
-    public String getAllItems(Model model) {
+    public String getAllItems(Model model,HttpSession session) {
+        if(session.getAttribute("customer")==null) {
+            return "redirect:/shopping/login/login";
+        }
         try {
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);
@@ -38,7 +45,10 @@ public class ItemController {
     }
 
     @GetMapping("/name")
-    public String getItemsByName(@RequestParam("name") String name, Model model) {
+    public String getItemsByName(@RequestParam("name") String name, Model model,HttpSession session) {
+        if(session.getAttribute("customer")==null) {
+            return "redirect:/shopping/login/login";
+        }
         try {
             List<Item> itemsByName = itemService.getItemsByName(name);
             model.addAttribute("itemsList", itemsByName);
@@ -50,7 +60,10 @@ public class ItemController {
     }
 
     @GetMapping("/category")
-    public String getItemsByCategory(@RequestParam("category") String category, Model model) {
+    public String getItemsByCategory(@RequestParam("category") String category, Model model,HttpSession session) {
+        if(session.getAttribute("customer")==null) {
+            return "redirect:/shopping/login/login";
+        }
         try {
             List<Item> itemsByCategory = itemService.getItemsByCategory(category);
             model.addAttribute("itemsList", itemsByCategory);
@@ -62,7 +75,10 @@ public class ItemController {
     }
 
     @GetMapping("/rating")
-    public String getItemsByRating(@RequestParam("rating") String ratingString, Model model) {
+    public String getItemsByRating(@RequestParam("rating") String ratingString, Model model,HttpSession session) {
+        if(session.getAttribute("customer")==null) {
+            return "redirect:/shopping/login/login";
+        }
         try{
         int rating = Integer.parseInt(ratingString);
         List<Item> itemsByRating = itemService.getItemsByRating(rating);
@@ -76,7 +92,10 @@ public class ItemController {
     }
 
     @GetMapping("/price")
-    public String getItemsByPrice(@RequestParam("price") String priceString, Model model) {
+    public String getItemsByPrice(@RequestParam("price") String priceString, Model model,HttpSession session) {
+        if(session.getAttribute("customer")==null) {
+            return "redirect:/shopping/login/login";
+        }
         try{
         double price = Double.parseDouble(priceString);
         List<Item> itemsByPrice = itemService.getItemsByPrice(price);

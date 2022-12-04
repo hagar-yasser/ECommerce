@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.model.Customer;
 import org.example.model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -61,5 +62,12 @@ public class ItemRepositoryImpl implements ItemRepository {
         itemsByPriceQuery.setParameter("price",price);
         itemsByPrice=itemsByPriceQuery.list();
         return itemsByPrice;
+    }
+
+    @Override
+    public Item getItemById(int itemId, Session session) {
+        return session.load(Item.class,itemId);
+
+
     }
 }

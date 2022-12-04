@@ -14,4 +14,6 @@ public interface ItemRepository {
     public List<Item>getItemsByRating(int rating,Session session);
     public List<Item>getItemsByPrice(double price,Session session);
 
+    public Item getItemById (int itemId,Session session);
+
 }

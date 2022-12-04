@@ -78,50 +78,54 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
 //            }
 //        }
 //    }
-    public void updateQuantityCustomerItem(int customerId, int itemId) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+    public void updateQuantityCustomerItem(int customerId, int itemId, int quantity) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        List<CustomerItem> customerItems = getShoppingCartOfCustomer(customerId);
+            List<CustomerItem> customerItems = getShoppingCartOfCustomer(customerId);
 
 //
-        for (CustomerItem customerItem : customerItems) {
-            {
-                if (isItemInShoppingCart(customerId,itemId)) {
-                    customerItem.setQuantity(customerItem.getQuantity() + 1);
-                    customerItemRepository.addItemToCustomerItem(customerItem, session);
+            for (CustomerItem customerItem : customerItems) {
+
+                if (isItemInShoppingCart(customerId, itemId)) {
+                    customerItem.setQuantity(customerItem.getQuantity() + quantity);
+                    customerItemRepository.updateQuantityCustomerItem(customerId, itemId, quantity, session);
                     transaction.commit();
                     break;
 
                 }
-            }
 
+
+            }
+        }
+        catch (Exception e)
+        {
+            e.getMessage();
         }
     }
 
 
+    public void addToCustomerItem(int customerId, int itemId,int quantity) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            CustomerItem customerItem = new CustomerItem();
+            CustomerItemId customerItemId = new CustomerItemId();
+            Customer customer = customerRepository.getCustomer(customerId, session);
+            Item item = itemRepository.getItemById(itemId, session);
+            customerItemId.setItem(item);
+            customerItemId.setCustomer(customer);
+            customerItem.setCustomerItemId(customerItemId);
+            customerItem.setQuantity(quantity);
+            customerItemRepository.addItemToCustomerItem(customerItem, session);
+            transaction.commit();
+        }
 
-                public void addToCustomerItem ( int customerId, int itemId){
-                Session session = sessionFactory.openSession();
-                Transaction transaction = session.beginTransaction();
-                CustomerItem customerItem = new CustomerItem();
-                CustomerItemId customerItemId = new CustomerItemId();
-                Customer customer = customerRepository.getCustomer(customerId, session);
-                Item item = itemRepository.getItemById(itemId, session);
-                customerItemId.setItem(item);
-                customerItemId.setCustomer(customer);
-                customerItem.setCustomerItemId(customerItemId);
-                customerItem.setQuantity(1);
-                customerItemRepository.addItemToCustomerItem(customerItem, session);
-                transaction.commit();
+    }
 
-
-            }
-
-                @Override
-                public void deleteFromCustomerItem ( int customerId, int itemId){
-                Session session = sessionFactory.openSession();
-                Transaction transaction = session.beginTransaction();
+    @Override
+    public void deleteFromCustomerItem(int customerId, int itemId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
 //        CustomerItem customerItem= new CustomerItem();
 //        CustomerItemId customerItemId = new CustomerItemId();
 //        Customer customer = customerRepository.getCustomer(customerId, session);
@@ -129,26 +133,27 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
 //        customerItemId.setItem(item);
 //        customerItemId.setCustomer(customer);
 //        customerItem.setCustomerItemId(customerItemId);
-                List<CustomerItem> customerItems = getShoppingCartOfCustomer(customerId);
-                for (CustomerItem customerItem : customerItems) {
-                    {
-                        if ((customerItem.getCustomerItemId().getItem().getItemId()) == itemId) {
-                            customerItemRepository.deleteItemFromCustomerItem(customerItem);
-                            break;
-                        }
-                    }
-
-
+        List<CustomerItem> customerItems = getShoppingCartOfCustomer(customerId);
+        for (CustomerItem customerItem : customerItems) {
+            {
+                if ((customerItem.getCustomerItemId().getItem().getItemId()) == itemId) {
+                    customerItemRepository.deleteItemFromCustomerItem(customerItem);
+                    break;
                 }
             }
 
-                public void deleteCustomerItem ( int customerId){
-                Session session = sessionFactory.openSession();
-                Transaction transaction = session.beginTransaction();
-                customerItemRepository.deleteShoppingCartOfCustomer(customerId, session);
-                transaction.commit();
 
-            }
-            }
+        }
+    }
+
+    public void deleteCustomerItem(int customerId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        customerItemRepository.deleteShoppingCartOfCustomer(customerId, session);
+        transaction.commit();
+
+    }
+}
+
 
 

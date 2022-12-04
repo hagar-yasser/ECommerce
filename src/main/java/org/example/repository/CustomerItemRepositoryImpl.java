@@ -34,13 +34,33 @@ public class CustomerItemRepositoryImpl implements CustomerItemRepository {
             session.delete(ci);
         }
     }
+    public void updateQuantityCustomerItem(int customerId, int itemId,int quantity , Session session) {
+
+        try {
+            Query query = session.createQuery("update CustomerItem ci set ci.quantity = :quantity where ci.customerItemId.customer.id = :cid AND ci.customerItemId.item.id = :itemId");
+            query.setParameter("quantity", quantity);
+            query.setParameter("cid", customerId);
+            query.setParameter("itemId", itemId);
+            query.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            e.getMessage();
+        }
+    }
+
+
+
 
     @Override
     public void addItemToCustomerItem(CustomerItem customerItem, Session session) {
-
         session.save(customerItem);
 
+
     }
+
+
+
 
     @Override
     public void deleteItemFromCustomerItem(CustomerItem customerItem) {

@@ -1,4 +1,4 @@
-<%@page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,6 +19,15 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
+  background-color: #046daa;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+.b {
   background-color: #046daa;
   color: white;
   padding: 14px 20px;
@@ -129,10 +138,11 @@ span.psw {
 </head>
 <body>
 
-<h2>Modal Login Form</h2>
+<h2>WELCOME TO E-COMMERCE WEBSITE</h2>
 <h3 style ="color:red">${error }</h3>
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+<a href="${pageContext.request.contextPath }/shopping/login/login"><input class="b" style="width:auto;" type="submit" value="Register" /></a>
 
 <div id="id01" class="modal">
 
@@ -140,7 +150,8 @@ span.psw {
                                       		action="${pageContext.request.contextPath }/shopping/login/login">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img href="/resources/images/avatar.png" alt="Avatar" class="avatar">
+
+
     </div>
 
     <div class="container">

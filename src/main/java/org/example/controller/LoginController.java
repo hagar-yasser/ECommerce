@@ -41,7 +41,7 @@ public class LoginController {
                 loginService.setLoggedIn(customer.getCustomerId());
                 session.setAttribute("customer", customer);
                 //return "success";
-                return "redirect:/shopping/items/";
+                return "redirect:/shopping/items/all";
             } else if (customer.getEmail().equals(email) && !customer.getPassword().equals(password) && customer.getWrongPasswordTrials() < 3) {
                 loginService.incrementWrongPassTrials(customer.getCustomerId());
                 modelMap.put("error", "Wrong Password....Try Again!!");

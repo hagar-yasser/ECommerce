@@ -30,10 +30,15 @@ public class ItemController {
     }
 
     @GetMapping("/all")
+<<<<<<< HEAD
     public String getAllItems(Model model,HttpSession session) {
         if(session.getAttribute("customer")==null) {
             return "redirect:/shopping/login/login";
         }
+=======
+    public String getAllItems(Model model) {
+        model.addAttribute("tempItem",new Item());
+>>>>>>> 1886224aef4bbc91fc8de307c375c27c831ac724
         try {
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);

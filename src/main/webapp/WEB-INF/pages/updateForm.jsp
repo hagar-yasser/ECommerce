@@ -46,8 +46,10 @@
         </div>
 
         <br>
-        <input type="submit" value="Update Admin">
+        <input class="btn btn-primary" type="submit" value="Update Admin">
     </form:form>
+    <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
+
 
 </div>
 </body>

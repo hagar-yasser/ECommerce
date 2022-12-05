@@ -43,6 +43,20 @@ public class ItemController {
             return "error";
         }
     }
+    @GetMapping("/allForAdmin")
+    public String getAllItemsForAdmin(Model model,HttpSession session) {
+        if(session.getAttribute("customer")==null) {
+            return "redirect:/shopping/login/login";
+        }
+        try {
+            List<Item> allItems = itemService.getAllItems();
+            model.addAttribute("itemsList", allItems);
+            return "listItemsAdminModule";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "error";
+        }
+    }
 
     @GetMapping("/name")
     public String getItemsByName(@RequestParam("name") String name, Model model,HttpSession session) {

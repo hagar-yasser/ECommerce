@@ -32,6 +32,10 @@ public class AdminController {
 
     @GetMapping("/showAllAdmins")
     public String showAllAdmins(Model model, HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (session.getAttribute("customer") == null) {
             return "redirect:/shopping/login/login";
         }
@@ -47,6 +51,10 @@ public class AdminController {
 
     @GetMapping("/addAdmin")
     public String showFormForAdd(Model model, HttpSession session) {
+        Customer customer1 = (Customer) session.getAttribute("customer");
+        if (!customer1.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (session.getAttribute("customer") == null) {
             return "redirect:/shopping/login/login";
         }
@@ -62,22 +70,30 @@ public class AdminController {
     }
 
     @RequestMapping(value = "addAdmin", method = RequestMethod.POST)
-    public String addAdmin(@ModelAttribute("admin") Customer admin, Model model, HttpSession session) {
+    public String addAdmin(@Valid @ModelAttribute("admin") Customer admin,BindingResult bindingResult, Model model, HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (session.getAttribute("customer") == null) {
             return "redirect:/shopping/login/login";
         }
-        try {
-            admin.setIsAdmin(true);
-            adminService.addAdmin(admin);
-            return "redirect:/shopping/admin/showAllAdmins";
-        } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
-        }
+            try {
+                admin.setIsAdmin(true);
+                adminService.addAdmin(admin);
+                return "redirect:/shopping/admin/showAllAdmins";
+            } catch (Exception e) {
+                model.addAttribute("error", e.getMessage());
+                return "addAdmin";
+            }
     }
 
     @RequestMapping(value = "deleteAdmin/{id}", method = RequestMethod.GET)
     public String deleteAdmin(@PathVariable int id, Model model, HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (session.getAttribute("customer") == null) {
             return "redirect:/shopping/login/login";
         }
@@ -92,6 +108,10 @@ public class AdminController {
     @RequestMapping(value="updateForm/{id}",method = RequestMethod.GET)
     public String showFormForUpdate(@PathVariable int id,
                                     Model model, HttpSession session) {
+        Customer customer1 = (Customer) session.getAttribute("customer");
+        if (!customer1.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (session.getAttribute("customer") == null) {
             return "redirect:/shopping/login/login";
         }
@@ -107,6 +127,10 @@ public class AdminController {
 
     @RequestMapping(value = "updateForm/{id}", method = RequestMethod.POST)
     public String showFormForUpdate(@PathVariable int id, @ModelAttribute("admin") Customer admin, Model model, HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (session.getAttribute("customer") == null) {
             return "redirect:/shopping/login/login";
         }
@@ -122,6 +146,9 @@ public class AdminController {
     @GetMapping("/addItem/")
     public String getAddItem(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (customer == null) {
             return "redirect:/shopping/login/login";
         }
@@ -141,6 +168,9 @@ public class AdminController {
     @PostMapping("/addItem/")
     public String addItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (customer == null) {
             return "redirect:/shopping/login/login";
         }
@@ -170,6 +200,9 @@ public class AdminController {
     @GetMapping("/showAllItems/")
     public String showAllItems(HttpSession session,Model model) throws Exception {
         Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (customer == null) {
             return "redirect:/shopping/login/login";
         }
@@ -189,6 +222,9 @@ public class AdminController {
     @GetMapping("/updateItem/{itemId}")
     public String getUpdateItemForm(@PathVariable("itemId")int itemId,HttpSession session, Model model) throws Exception {
         Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (customer == null) {
             return "redirect:/shopping/login/login";
         }
@@ -209,6 +245,9 @@ public class AdminController {
     @PostMapping("/updateItem/")
     public String updateItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (customer == null) {
             return "redirect:/shopping/login/login";
         }
@@ -229,6 +268,9 @@ public class AdminController {
     public String deleteItem(@PathVariable("itemId") int itemId,
                              Model model, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
+        if (!customer.getIsAdmin()){
+            return "redirect:/shopping/login/login";
+        }
         if (customer == null) {
             return "redirect:/shopping/login/login";
         }

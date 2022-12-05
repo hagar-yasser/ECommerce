@@ -41,6 +41,9 @@ public class LoginController {
                 loginService.setLoggedIn(customer.getCustomerId());
                 session.setAttribute("customer", customer);
                 //return "success";
+                if(customer.getIsAdmin()){  // to let the admin manage other admins and items
+                    return "redirect:/shopping/items/allForAdmin";
+                }
                 return "redirect:/shopping/items/all";
             } else if (customer.getEmail().equals(email) && !customer.getPassword().equals(password) && customer.getWrongPasswordTrials() < 3) {
                 loginService.incrementWrongPassTrials(customer.getCustomerId());

@@ -80,6 +80,10 @@
 
 </table>
 <a href="${pageContext.request.contextPath }/shopping/items/"><input class="btn btn-primary" type="submit" value="Search in items" /></a>
+<a href="${pageContext.request.contextPath }/shopping/admin/addAdmin"><input class="btn btn-primary" type="submit" value="Add Admin" /></a>
+<a href="${pageContext.request.contextPath }/shopping/admin/showAllAdmins"><input class="btn btn-primary" type="submit" value="Show All Admins" /></a>
+<a href="${pageContext.request.contextPath }/shopping/admin/addItem/"><input class="btn btn-primary" type="submit" value="Add Item" /></a>
+<a href="${pageContext.request.contextPath }/shopping/admin/showAllItems/"><input class="btn btn-primary" type="submit" value="Show All Items" /></a>
 <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 </div>
 </div>

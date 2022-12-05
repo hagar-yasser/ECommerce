@@ -55,8 +55,8 @@ public class LoginController {
                 return "enterEmail";
             }
         } catch (Exception e) {
-            modelMap.addAttribute("message", e.getMessage());
-            return "error";
+            modelMap.addAttribute("error", e.getMessage());
+            return "login";
         }
     }
 

@@ -11,7 +11,7 @@
 <body class="container">
 <div class="card">
        <div class="card-body">
-<h1>Error: ${message}</h1>
+<h1 style="color:red">Error: ${message}</h1>
 </div>
 </div>
 </body>

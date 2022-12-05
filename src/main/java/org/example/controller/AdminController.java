@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -182,7 +184,7 @@ public class AdminController {
     }
 
     @PostMapping("/addItem/")
-    public String addItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
+    public String addItem(HttpSession session, @RequestParam("image") CommonsMultipartFile image, @ModelAttribute("item") Item item, Model model) {
 
         try {
             Customer customer = (Customer) session.getAttribute("customer");
@@ -193,6 +195,7 @@ public class AdminController {
             if (customer == null) {
                 return "redirect:/shopping/login/login";
             }
+            item.setImage(image.getBytes());
             itemService.addItem(item);
             return "redirect:/shopping/items/";
         } catch (Exception e) {

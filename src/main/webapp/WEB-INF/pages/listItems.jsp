@@ -49,6 +49,12 @@
 </table>
 </div>
 </div>
+<br>
+<div>
+	<a href="${pageContext.request.contextPath }/shopping/items/""><input class="btn btn-primary" type="submit" value="Search in items" /></a>
+</div>
+<br>
+	<a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 <%
 
 %>

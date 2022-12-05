@@ -49,7 +49,7 @@ public class ShoppingServletConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // front resource.
         registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/").setCachePeriod(31556926);
+                .addResourceLocations("/WEB-INF/resources/").setCachePeriod(31556926);
 
 
 

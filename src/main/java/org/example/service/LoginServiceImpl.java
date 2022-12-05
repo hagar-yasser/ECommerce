@@ -15,27 +15,47 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public Customer findByEmail(String email) {
-        return loginRepository.findByEmail(email);
+    public Customer findByEmail(String email) throws Exception {
+        try {
+            return loginRepository.findByEmail(email);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 
     @Override
-    public void setLoggedIn(int id) {
-        loginRepository.setLoggedIn(id);
+    public void setLoggedIn(int id) throws Exception {
+        try {
+            loginRepository.setLoggedIn(id);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 
     @Override
-    public void setLoggedOut(int id) {
-        loginRepository.setLoggedOut(id);
+    public void setLoggedOut(int id) throws Exception {
+        try {
+            loginRepository.setLoggedOut(id);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 
     @Override
-    public void deActivateUser(int id) {
-        loginRepository.deActivateUser(id);
+    public void deActivateUser(int id) throws Exception {
+        try {
+            loginRepository.deActivateUser(id);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 
     @Override
-    public void incrementWrongPassTrials(int id) {
-        loginRepository.incrementWrongPassTrials(id);
+    public void incrementWrongPassTrials(int id) throws Exception {
+        try {
+            loginRepository.incrementWrongPassTrials(id);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 }

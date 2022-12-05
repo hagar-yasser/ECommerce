@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body class="container">
+<h1>Admins List</h1>
+<div class="card">
+       <div class="card-body">
 <table class="table">
     <thead class="table table-dark">
     <tr>
@@ -47,5 +50,8 @@
     </tbody>
 
 </table>
+<a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
+</div>
+</div>
 </body>
 </html>

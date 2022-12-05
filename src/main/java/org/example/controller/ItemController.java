@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.model.Customer;
 import org.example.model.Item;
 import org.example.service.ItemService;
 import org.springframework.stereotype.Controller;
@@ -30,14 +31,40 @@ public class ItemController {
     }
 
     @GetMapping("/all")
+<<<<<<< HEAD
     public String getAllItems(Model model,HttpSession session) {
         if(session.getAttribute("customer")==null) {
             return "redirect:/shopping/login/login";
         }
+=======
+    public String getAllItems(Model model) {
+        model.addAttribute("tempItem",new Item());
+>>>>>>> 1886224aef4bbc91fc8de307c375c27c831ac724
         try {
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);
             return "listItems";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "error";
+        }
+    }
+    @GetMapping("/allForAdmin")
+    public String getAllItemsForAdmin(Model model,HttpSession session) {
+
+        try {
+            Customer customer = (Customer) session.getAttribute("customer");
+            if (!customer.getIsAdmin()){
+                model.addAttribute("error","you must login as admin first");
+                return "login";
+            }
+            if(customer==null) {
+                return "redirect:/shopping/login/login";
+            }
+
+            List<Item> allItems = itemService.getAllItems();
+            model.addAttribute("itemsList", allItems);
+            return "listItemsAdminModule";
         } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
             return "error";

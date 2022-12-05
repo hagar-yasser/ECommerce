@@ -60,6 +60,7 @@
     </tbody>
 
 </table>
+<a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 </div>
 </div>
 <%

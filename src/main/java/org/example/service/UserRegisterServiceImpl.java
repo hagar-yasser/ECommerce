@@ -5,7 +5,9 @@ import org.example.model.VerificationToken;
 import org.example.repository.UserRegisterRepository;
 import org.example.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserRegisterServiceImpl implements UserRegisterService {
 
     private UserRegisterRepository userRegisterRepository;
@@ -36,8 +38,5 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 //        verificationTokenRepository.save(newUserToken);
 //    }
 
-    @Override
-    public void sendVerification() {
 
-    }
 }

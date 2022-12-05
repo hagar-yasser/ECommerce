@@ -8,10 +8,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class UserRegisterRepository {
 
     public Customer findByEmail(String email){
@@ -19,7 +21,7 @@ public class UserRegisterRepository {
                 .addAnnotatedClass(Customer.class)
                 .buildSessionFactory();
         Session session = sessionFactory.openSession();
-        Query<Customer> query = session.createQuery("from Customer where email=:email", Customer.class);
+        Query<Customer> query = session.createQuery("from Customer where email=:email ", Customer.class);
         session.setCacheMode(CacheMode.IGNORE);
         query.setParameter("email", email);
         Customer customer = null;
@@ -40,7 +42,6 @@ public class UserRegisterRepository {
             Transaction transaction = session.beginTransaction();
             session.save(customer);
             transaction.commit();
-            System.out.println("user is registered");
         }finally {
             sessionFactory.close();
             session.close();

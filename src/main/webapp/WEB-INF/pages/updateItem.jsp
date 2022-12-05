@@ -17,7 +17,10 @@
 </head>
 <body>
 <div class="container">
-
+<h1>Update Form For Item</h1>
+<h3 style ="color:red">${error }</h3>
+<div class="card">
+       <div class="card-body">
     <form:form modelAttribute="item" action= "${pageContext.request.contextPath }/shopping/admin/updateItem/" method="post" enctype="multipart/form-data">
         <div class="from-row md-4">
                     <label for="itemId">ItemId</label>
@@ -46,9 +49,12 @@
 
 
         <br>
-        <input type="submit" value="update Item">
+        <input type="submit" value="update Item" class="btn btn-primary">
     </form:form>
+        <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 
+</div>
+</div>
 </div>
 </body>
 </html>

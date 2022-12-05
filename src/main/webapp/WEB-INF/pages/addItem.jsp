@@ -17,7 +17,10 @@
 </head>
 <body>
 <div class="container">
-
+<h1>Add New Item</h1>
+<h3 style ="color:red">${error }</h3>
+<div class="card">
+       <div class="card-body">
     <form:form modelAttribute="item" method="post" enctype="multipart/form-data">
         <div class="from-row md-4">
             <label for="name">Name</label>
@@ -39,12 +42,19 @@
      <label for="rating">Rating</label>
      <form:input path="rating" cssClass="form-control" id="rating"/>
     </div>
+    <div class="from-row md-4">
+     <label for="image">Select an image to upload</label>
+     <input type="file" cssClass="form-control" name="image"/>
+    </div>
 
 
         <br>
-        <input type="submit" value="add Item">
+        <input type="submit" value="add Item" class="btn btn-primary">
     </form:form>
+        <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 
+</div>
+</div>
 </div>
 </body>
 </html>

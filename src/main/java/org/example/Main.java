@@ -41,7 +41,7 @@ public class Main {
         item.setPrice(16.9);
         item.setQuantity(2);
         item.setRating(0);
-        String photoFileName="/home/voidDev/Downloads/productPhoto.jpeg";
+        String photoFileName="/home/voidDev/Downloads/img_avatar2.png";
         byte[] photoBytes = readBytesFromFile(photoFileName);
         item.setImage(photoBytes);
         try(Session session=sessionFactory.openSession()){

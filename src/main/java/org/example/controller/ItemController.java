@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.model.Customer;
 import org.example.model.Item;
 import org.example.service.ItemService;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,27 @@ public class ItemController {
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);
             return "listItems";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "error";
+        }
+    }
+    @GetMapping("/allForAdmin")
+    public String getAllItemsForAdmin(Model model,HttpSession session) {
+
+        try {
+            Customer customer = (Customer) session.getAttribute("customer");
+            if (!customer.getIsAdmin()){
+                model.addAttribute("error","you must login as admin first");
+                return "login";
+            }
+            if(customer==null) {
+                return "redirect:/shopping/login/login";
+            }
+
+            List<Item> allItems = itemService.getAllItems();
+            model.addAttribute("itemsList", allItems);
+            return "listItemsAdminModule";
         } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
             return "error";

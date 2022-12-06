@@ -34,7 +34,7 @@
 </head>
 <body class="container">
 <div class="topnav">
-  <a class="active" href="${pageContext.request.contextPath }/shopping/items/all">Home</a>
+  <a class="active" href="${pageContext.request.contextPath }/shopping/items/allForAdmin">Home</a>
   <a href="#news">News</a>
   <a href="#contact">Contact</a>
   <a href="#about">About</a>
@@ -52,6 +52,7 @@
         <td>CATEGORY</td>
         <td>PRICE</td>
         <td>RATING</td>
+        <td>QUANTITY IN STORE</td>
         <td>IMAGE</td>
 
 
@@ -67,7 +68,7 @@
                 <td>${item.category}</td>
                 <td>${item.price}</td>
                 <td>${item.rating}</td>
-
+                <td>${item.quantity}</td>
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
                 </c:if>

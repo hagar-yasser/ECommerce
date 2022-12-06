@@ -18,6 +18,5 @@ public interface ItemRepository {
     public Item getItemById(int itemId,Session session);
     public boolean decrementItemQuantity(int itemId,int decrementCounter,Session session);
 
-    public Item getItemById (int itemId,Session session);
 
 }

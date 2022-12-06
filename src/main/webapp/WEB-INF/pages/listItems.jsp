@@ -76,17 +76,14 @@
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
                 </c:if>
-
-<%--                <td> <input type="text" id="quantity" name ="quantity"> </td>--%>
+                <c:if test="${item.image==null}">
+                     <td>No image</td>
+                </c:if>
 
                 <td><input class="form-control" type="number" name="quantity"/></td>
 
-
-
                 <td><input class="btn btn-primary" type="submit" value="add to cart" /></td>
-                <c:if test="${item.image!=null}">
-                    <td>${item.image}</td>
-                </c:if>
+
             </tr>
             </form>
         </c:forEach>

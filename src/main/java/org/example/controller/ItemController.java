@@ -46,17 +46,16 @@ public class ItemController {
     }
     @GetMapping("/allForAdmin")
     public String getAllItemsForAdmin(Model model,HttpSession session) {
-
+        Customer customer = (Customer) session.getAttribute("customer");
+        if(customer==null) {
+            model.addAttribute("error","You must login at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
             if (!customer.getIsAdmin()){
                 model.addAttribute("error","you must login as admin first");
                 return "login";
             }
-            if(customer==null) {
-                return "redirect:/shopping/login/login";
-            }
-
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);
             return "listItemsAdminModule";

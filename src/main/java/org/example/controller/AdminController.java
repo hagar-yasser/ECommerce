@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.Valid;
+import java.sql.Blob;
 import java.util.List;
 import java.util.Map;
 
@@ -187,7 +189,7 @@ public class AdminController {
 
     //@PostMapping("/addItem/")
     @RequestMapping(value="/addItem/" , method= RequestMethod.POST,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String addItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, Model model) {
+    public String addItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, @RequestParam("image") MultipartFile image,Model model) {
 
         Customer customer = (Customer) session.getAttribute("customer");
         if (session.getAttribute("customer") == null) {
@@ -199,8 +201,12 @@ public class AdminController {
             return "login";
         }
         try {
+
+            byte[] contents = image.getBytes();
+            Blob blob = new SerialBlob(contents);
+            item.setImage(contents);
             itemService.addItem(item);
-            return "redirect:/shopping/items/";
+            return "redirect:/shopping/items/all";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "addItem";

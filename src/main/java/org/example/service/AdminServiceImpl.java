@@ -17,31 +17,46 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<Customer> showAllAdmins() {
-
-        return adminRepository.showAllAdmins();
+    public List<Customer> showAllAdmins() throws Exception {
+        try {
+            return adminRepository.showAllAdmins();
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 
     @Override
-    public void addAdmin(Customer customer) {
-
-        adminRepository.addAdmin(customer);
+    public void addAdmin(Customer customer) throws Exception {
+        try {
+            adminRepository.addAdmin(customer);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 
     @Override
-    public void deleteAdminById(int id) {
-
-        adminRepository.deleteAdminById(id);
+    public void deleteAdminById(int id) throws Exception {
+        try {
+            adminRepository.deleteAdminById(id);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
 
     @Override
-    public void updateAdmin(int id, Customer customer) {
-
-        adminRepository.updateAdmin(id,customer);
+    public void updateAdmin(int id, Customer customer) throws Exception {
+        try {
+            adminRepository.updateAdmin(id, customer);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
     }
-    public Customer getCustomerById(int id){
-
-        return adminRepository.getCustomerById(id);
+    public Customer getCustomerById(int id) throws Exception {
+        try {
+            return adminRepository.getCustomerById(id);
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
 
     }
 }

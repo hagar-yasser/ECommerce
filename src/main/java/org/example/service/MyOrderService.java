@@ -2,16 +2,14 @@ package org.example.service;
 
 import org.example.model.CustomerItem;
 import org.example.model.MyOrder;
-import org.example.repository.CustomerItemRepository;
-import org.example.repository.CustomerRepository;
-import org.example.repository.MyOrderItemRepository;
-import org.example.repository.MyOrderRepository;
+import org.example.repository.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,17 +19,19 @@ public class MyOrderService {
     private CustomerItemRepository customerItemRepository;
     private MyOrderItemRepository myOrderItemRepository;
     private CustomerRepository customerRepository;
+    private ItemRepository itemRepository;
 
     public MyOrderService(MyOrderRepository myOrderRepository,
                           SessionFactory sessionFactory,
                           CustomerItemRepository customerItemRepository,
                           MyOrderItemRepository myOrderItemRepository,
-                          CustomerRepository customerRepository) {
+                          CustomerRepository customerRepository,ItemRepository itemRepository) {
         this.myOrderRepository = myOrderRepository;
         this.sessionFactory = sessionFactory;
         this.customerItemRepository = customerItemRepository;
         this.myOrderItemRepository = myOrderItemRepository;
         this.customerRepository=customerRepository;
+        this.itemRepository=itemRepository;
     }
 
     public MyOrder submitOrder(int customerId) throws Exception {
@@ -44,7 +44,15 @@ public class MyOrderService {
                 newOrder.setOwner(customerRepository.getCustomer(customerId, session));
                 newOrder.setMyOrderDate(LocalDate.now());
                 newOrder = myOrderRepository.createNewMyOrder(newOrder, session);
-                myOrderItemRepository.addCustomerItemsInOrderItems(newOrder.getMyOrderId(), shoppingCart, session);
+                List<CustomerItem>validShoppingCart=new ArrayList<>();
+                for (int i = 0; i < shoppingCart.size() ; i++) {
+                    CustomerItem currItem=shoppingCart.get(i);
+                    if(itemRepository.decrementItemQuantity(currItem.getItem().getItemId(),
+                            currItem.getQuantity(),session)){
+                        validShoppingCart.add(currItem);
+                    }
+                }
+                myOrderItemRepository.addCustomerItemsInOrderItems(newOrder.getMyOrderId(), validShoppingCart, session);
             }
             transaction.commit();
             return newOrder;

@@ -15,9 +15,9 @@ public interface CustomerItemService {
     //    public void increaseItemQuantity(List<CustomerItem> customerItems, Item item);
 //    public void updateQuantityCustomerItem(int customerId, int itemId, int quantity);
     public void updateQuantityCustomerItem(int customerId, int itemId,int quantity);
-    public void addToCustomerItem(int customerId, int itemId, int quantity);
+    public void addToCustomerItem(int customerId, int itemId, int quantity) throws Exception;
 
     public void deleteFromCustomerItem(int customerId, int itemId);
-    public void deleteCustomerItem(int customerId);
+    public void deleteCustomerItem(int customerId) throws Exception;
 
 }

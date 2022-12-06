@@ -105,7 +105,7 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
     }
 
 
-    public void addToCustomerItem(int customerId, int itemId,int quantity) {
+    public void addToCustomerItem(int customerId, int itemId,int quantity) throws Exception {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             CustomerItem customerItem = new CustomerItem();
@@ -118,6 +118,8 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
             customerItem.setQuantity(quantity);
             customerItemRepository.addItemToCustomerItem(customerItem, session);
             transaction.commit();
+        }catch (Exception e){
+            throw new Exception("Couldn't add to customer item in the database");
         }
 
     }
@@ -146,11 +148,15 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
         }
     }
 
-    public void deleteCustomerItem(int customerId) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        customerItemRepository.deleteShoppingCartOfCustomer(customerId, session);
-        transaction.commit();
+    public void deleteCustomerItem(int customerId) throws Exception {
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            customerItemRepository.deleteShoppingCartOfCustomer(customerId, session);
+            transaction.commit();
+        }catch (Exception e){
+            throw new Exception("Couldn't get Items from the database");
+        }
 
     }
 }

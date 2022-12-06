@@ -21,9 +21,7 @@
 <h3 style ="color:red">${error }</h3>
 <div class="card">
        <div class="card-body">
-<%--           method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/shopping/admin/addItem"--%>
-    <form:form modelAttribute="item" method="post" action="${pageContext.request.contextPath}/shopping/admin/addItem">
-
+    <form:form modelAttribute="item" method="post" enctype="multipart/form-data">
         <div class="from-row md-4">
             <label for="name">Name</label>
             <form:input path="name" cssClass="form-control" id="name"/>
@@ -38,16 +36,16 @@
       </div>
       <div class="from-row md-4">
          <label for="quantity">Quantity</label>
-         <form:input path="quantity" cssClass="form-control" id="quantity"/>
+         <form:input path="quantity" cssClass="form-control" id="quantity" type="number" min="0"/>
     </div>
     <div class="from-row md-4">
      <label for="rating">Rating</label>
-     <form:input path="rating" cssClass="form-control" id="rating"/>
+     <form:input path="rating" cssClass="form-control" id="rating" type="number" min="0" max="5"/>
     </div>
-<%--    <div class="from-row md-4">--%>
-<%--     <label for="image">Select an image to upload</label>--%>
-<%--     <input type="file" cssClass="form-control" name="image"/>--%>
-<%--    </div>--%>
+    <div class="from-row md-4">
+     <label for="image">Select an image to upload</label>
+     <form:input path="image" type="file" cssClass="form-control" id="image"/>
+    </div>
 
 
         <br>

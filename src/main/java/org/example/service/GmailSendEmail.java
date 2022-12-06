@@ -15,7 +15,6 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 import org.apache.commons.codec.binary.Base64;
-import org.example.model.Customer;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Session;
@@ -24,7 +23,6 @@ import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.nio.file.Paths;
 
-import java.security.GeneralSecurityException;
 import java.util.Properties;
 import java.util.Set;
 
@@ -46,7 +44,7 @@ public class GmailSendEmail {
         // Load client secrets.
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(jsonFactory,
-                        new InputStreamReader(GmailSendEmail.class.getResourceAsStream("client_secret_61498862746-bp2jci5r3vp3nvpdjhsdoq3do3elrfsh.apps.googleusercontent.com.json")));
+                        new InputStreamReader(GmailSendEmail.class.getResourceAsStream("client.json")));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
@@ -65,10 +63,9 @@ public class GmailSendEmail {
      *
      * @param subject the subject of email that will be sent
      * @param message  the content of message
-     * @param customer the user object
      * @throws Exception If the credentials.json file cannot be found.
      */
-    public void sendEmail(String subject, String message, Customer customer) throws Exception {
+    public void sendEmail(String subject, String message) throws Exception {
 
         NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         GsonFactory jsonFactory= GsonFactory.getDefaultInstance();
@@ -94,7 +91,7 @@ public class GmailSendEmail {
 
         try {
             // Create send message
-            messg1 = service.users().messages().send(customer.getEmail(), messg1).execute();
+            messg1 = service.users().messages().send("me", messg1).execute();
             System.out.println("Message id: " + messg1.getId());
             System.out.println(messg1.toPrettyString());
         } catch (GoogleJsonResponseException e) {
@@ -108,6 +105,5 @@ public class GmailSendEmail {
         }
 
 }
-
 
 }

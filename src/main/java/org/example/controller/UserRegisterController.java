@@ -68,12 +68,44 @@ public class UserRegisterController {
             //sending message with Gmail API
             String subject = "This verification mail to complete registration process";
             String message = "Please Click on the link "+"http://localhost:8080/shopping/registration/verifyAccount?token="+verificationToken.getToken();
-//            gmailSendEmail.sendEmail(subject,message,customer);
+//            gmailSendEmail.sendEmail(subject,message);
+            final String fromEmail = "anasroshdiii@gmail.com"; //requires valid gmail id
+            final String password = "AmasrhyaomyM"; // correct password for gmail id
+            final String toEmail = "myemail@yahoo.com"; // can be any email id
+
+            //tls auth
+
+            System.out.println("TLSEmail Start");
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+            props.put("mail.smtp.port", "587"); //TLS Port
+            props.put("mail.smtp.auth", "true"); //enable authentication
+            props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+            props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+            props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+            props.setProperty("mail.transport.protocol", "smtp");
+
+            //ssl auth
+//            props.put("mail.imap.host", "imap.gmail.com"); //SMTP Host
+//            props.put("mail.imap.socketFactory.port", "993"); //SSL Port
+//            props.put("mail.imap.socketFactory.class",
+//                    "javax.net.ssl.SSLSocketFactory"); //SSL Factory Class
+//            props.put("mail.imap.auth", "true"); //Enabling SMTP Authentication
+//            props.put("mail.imap.port", "465"); //SMTP Port
+
+            //create Authenticator object to pass in Session.getInstance argument
+            Authenticator auth = new Authenticator() {
+                //override the getPasswordAuthentication method
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromEmail, password);
+                }
+            };
+            Session session = Session.getInstance(props, auth);
+
+            sendGridEmailer.sendEmail(session, toEmail,"TLSEmail Testing Subject", "TLSEmail Testing Body");
 
             return "verification";
         }
-
-
 
     }
 

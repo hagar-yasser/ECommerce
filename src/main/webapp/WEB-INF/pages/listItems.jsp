@@ -80,7 +80,7 @@
                      <td>No image</td>
                 </c:if>
 
-                <td><input class="form-control" type="number" name="quantity"/></td>
+                <td><input class="form-control" type="number" name="quantity" min="0"/></td>
 
                 <td><input class="btn btn-primary" type="submit" value="add to cart" /></td>
 

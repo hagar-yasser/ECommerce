@@ -23,9 +23,10 @@ public class ItemController {
     }
 
     @GetMapping("/")
-    public String getSearchItemsForm(HttpSession session) {
+    public String getSearchItemsForm(HttpSession session, Model model) {
         if(session.getAttribute("customer")==null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         return "searchItems";
     }
@@ -33,72 +34,76 @@ public class ItemController {
     @GetMapping("/all")
     public String getAllItems(Model model,HttpSession session) {
         if(session.getAttribute("customer")==null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try {
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);
             return "listItems";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "listItems";
         }
     }
     @GetMapping("/allForAdmin")
     public String getAllItemsForAdmin(Model model,HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
         if(customer==null) {
-            model.addAttribute("error","You must login at first");
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as an admin at first");
             return "login";
         }
         try {
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);
             return "listItemsAdminModule";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "listItemsAdminModule";
         }
     }
 
     @GetMapping("/name")
     public String getItemsByName(@RequestParam("name") String name, Model model,HttpSession session) {
         if(session.getAttribute("customer")==null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try {
             List<Item> itemsByName = itemService.getItemsByName(name);
             model.addAttribute("itemsList", itemsByName);
             return "listItems";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "listItems";
         }
     }
 
     @GetMapping("/category")
     public String getItemsByCategory(@RequestParam("category") String category, Model model,HttpSession session) {
         if(session.getAttribute("customer")==null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try {
             List<Item> itemsByCategory = itemService.getItemsByCategory(category);
             model.addAttribute("itemsList", itemsByCategory);
             return "listItems";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "listItems";
         }
     }
 
     @GetMapping("/rating")
     public String getItemsByRating(@RequestParam("rating") String ratingString, Model model,HttpSession session) {
         if(session.getAttribute("customer")==null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try{
         int rating = Integer.parseInt(ratingString);
@@ -107,15 +112,16 @@ public class ItemController {
         return "listItems";
         }
         catch (Exception e){
-            model.addAttribute("message",e.getMessage());
-            return "error";
+            model.addAttribute("error",e.getMessage());
+            return "listItems";
         }
     }
 
     @GetMapping("/price")
     public String getItemsByPrice(@RequestParam("price") String priceString, Model model,HttpSession session) {
         if(session.getAttribute("customer")==null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try{
         double price = Double.parseDouble(priceString);
@@ -124,8 +130,8 @@ public class ItemController {
         return "listItems";
         }
         catch (Exception e){
-            model.addAttribute("message",e.getMessage());
-            return "error";
+            model.addAttribute("error",e.getMessage());
+            return "listItems";
         }
     }
 

@@ -8,6 +8,7 @@
 </head>
 <body class="container">
     <h1>Items</h1>
+    <h3 style ="color:red">${error }</h3>
 
 
  <div class="card">
@@ -44,8 +45,8 @@
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
                 </c:if>
-                <c:if test="${item.image ==null}">
-                       <td></td>
+                <c:if test="${item.image==null}">
+                    <td>No image</td>
                 </c:if>
 
                  <td>

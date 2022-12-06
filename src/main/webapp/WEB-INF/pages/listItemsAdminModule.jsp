@@ -40,7 +40,7 @@
   <a href="#about">About</a>
 </div>
     <h1>Items</h1>
-
+    <h3 style ="color:red">${error }</h3>
 
  <div class="card">
        <div class="card-body">
@@ -71,6 +71,9 @@
                 <td>${item.quantity}</td>
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
+                </c:if>
+                <c:if test="${item.image==null}">
+                     <td>No image</td>
                 </c:if>
 
             </tr>

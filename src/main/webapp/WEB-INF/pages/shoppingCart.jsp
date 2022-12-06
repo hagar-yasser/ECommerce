@@ -10,6 +10,7 @@
     <title>SHOPPING CART</title>
     <h1>Cart</h1>
     <p>All the selected products in your shopping cart</p>
+        <h3 style ="color:red">${error }</h3>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body class="container">

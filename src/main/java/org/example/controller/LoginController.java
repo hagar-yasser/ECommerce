@@ -68,8 +68,8 @@ public class LoginController {
             session.invalidate();
             return "redirect:/shopping/login/login";
         }catch (Exception e) {
-            modelMap.addAttribute("message", e.getMessage());
-            return "error";
+            modelMap.addAttribute("error", e.getMessage());
+            return "login";
         }
     }
 

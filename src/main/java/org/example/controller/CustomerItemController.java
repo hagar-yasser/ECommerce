@@ -29,18 +29,23 @@ public class CustomerItemController {
 
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         } else {
-            double sum = 0;
-            List<CustomerItem> shoppingCart = customerItemService.getShoppingCartOfCustomer(customer.getCustomerId());
-            for (CustomerItem customerItem :shoppingCart )
-            {
-                sum += (customerItem.getItem().getPrice())* (customerItem.getQuantity());
-            }
-            model.addAttribute("cart", shoppingCart);
-            model.addAttribute("totalPrice", sum);
+            try {
+                double sum = 0;
+                List<CustomerItem> shoppingCart = customerItemService.getShoppingCartOfCustomer(customer.getCustomerId());
+                for (CustomerItem customerItem : shoppingCart) {
+                    sum += (customerItem.getItem().getPrice()) * (customerItem.getQuantity());
+                }
+                model.addAttribute("cart", shoppingCart);
+                model.addAttribute("totalPrice", sum);
 
-            return "shoppingCart";
+                return "shoppingCart";
+            } catch (Exception e) {
+                model.addAttribute("error", e.getMessage());
+                return "shoppingCart";
+            }
         }
 
 
@@ -55,42 +60,59 @@ public class CustomerItemController {
 
 
     @RequestMapping(value = "/addItem/{itemId}", method = RequestMethod.POST)
-    public String addItemToCart(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity, HttpSession session) {
+    public String addItemToCart(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity, HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         if (customerItemService.isItemInShoppingCart(customer.getCustomerId(), itemId)) {
             customerItemService.updateQuantityCustomerItem(customer.getCustomerId(), itemId, quantity);
         } else {
-            customerItemService.addToCustomerItem(customer.getCustomerId(), itemId,quantity );
+            try {
+                customerItemService.addToCustomerItem(customer.getCustomerId(), itemId,quantity );
+            } catch (Exception e) {
+                model.addAttribute("error", e.getMessage());
+                return "addItem";
+            }
         }
         return "redirect:/shopping/Cart/showAll";
     }
 
 
     @RequestMapping(value = "delete/{itemId}", method = RequestMethod.GET)
-    public String deleteItemFromCart(@PathVariable int itemId, HttpSession session) {
+    public String deleteItemFromCart(@PathVariable int itemId, HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
-
         if (customer == null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         } else {
-            customerItemService.deleteFromCustomerItem(customer.getCustomerId(), itemId);
+            try {
+                customerItemService.deleteFromCustomerItem(customer.getCustomerId(), itemId);
 
-            return "redirect:/shopping/Cart/showAll";
+                return "redirect:/shopping/Cart/showAll";
+            }catch (Exception e){
+                model.addAttribute("error", e.getMessage());
+                return "shoppingCart";
+            }
 
         }
     }
 
     @RequestMapping(value = "deleteCart", method = RequestMethod.GET)
-    public String deleteCustomerItem(HttpSession session) {
+    public String deleteCustomerItem(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         } else {
-            customerItemService.deleteCustomerItem(customer.getCustomerId());
-            return "redirect:/shopping/Cart/showAll";
+            try {
+                customerItemService.deleteCustomerItem(customer.getCustomerId());
+                return "redirect:/shopping/Cart/showAll";
+            }catch (Exception e){
+                model.addAttribute("error", e.getMessage());
+                return "shoppingCart";
+            }
         }
     }
 }

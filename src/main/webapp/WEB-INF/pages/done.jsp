@@ -8,6 +8,7 @@
     <title>Done</title>
 </head>
 <body>
+<h3 style ="color:red">${error }</h3>
 <h1>Check the database</h1>
 </body>
 </html>

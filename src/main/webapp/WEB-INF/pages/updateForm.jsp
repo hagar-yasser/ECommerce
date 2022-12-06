@@ -19,6 +19,7 @@
 <div class="container">
 <h1>Update Form</h1>
 <h3 style ="color:red">${error }</h3>
+<h3 style ="color:red">${error }</h3>
 <div class="card">
        <div class="card-body">
 

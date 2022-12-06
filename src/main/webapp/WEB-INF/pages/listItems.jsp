@@ -41,7 +41,7 @@
   <a href="#about">About</a>
 </div>
     <h1>Items</h1>
-
+<h3 style ="color:red">${error }</h3>
 
  <div class="card">
        <div class="card-body">
@@ -80,7 +80,7 @@
                      <td>No image</td>
                 </c:if>
 
-                <td><input class="form-control" type="number" name="quantity" min="0"/></td>
+                <td><input class="form-control" type="number" name="quantity" required="required" min="0"/></td>
 
                 <td><input class="btn btn-primary" type="submit" value="add to cart" /></td>
 

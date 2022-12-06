@@ -268,9 +268,11 @@ public class AdminController {
             return "listItemsAdmin";
         }
     }
+    @RequestMapping(value="/updateItem" , method= RequestMethod.POST,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String updateItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, @RequestParam("image") MultipartFile image,Model model) {
 
-    @PostMapping("/updateItem/")
-    public String updateItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
+//    @PostMapping("/updateItem/")
+//    public String updateItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
 
         Customer customer = (Customer) session.getAttribute("customer");
         if (session.getAttribute("customer") == null) {
@@ -282,8 +284,18 @@ public class AdminController {
             return "login";
         }
         try {
+            byte[] contents = image.getBytes();
+            Blob blob = new SerialBlob(contents);
+            item.setImage(contents);
             itemService.updateItem(item);
-            return "redirect:/shopping/admin/showAllItems/";
+            return "redirect:/shopping/items/all";
+
+
+
+
+//
+//            itemService.updateItem(item);
+//            return "redirect:/shopping/admin/showAllItems/";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "updateItem";

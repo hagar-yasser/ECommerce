@@ -7,6 +7,7 @@ import org.example.repository.ItemRepository;
 import org.example.service.AdminService;
 import org.example.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -184,8 +185,9 @@ public class AdminController {
 
     }
 
-    @PostMapping("/addItem/")
-    public String addItem(HttpSession session, @RequestParam("image") CommonsMultipartFile image, @ModelAttribute("item") Item item, Model model) {
+    //@PostMapping("/addItem/")
+    @RequestMapping(value="/addItem/" , method= RequestMethod.POST,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String addItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, Model model) {
 
         Customer customer = (Customer) session.getAttribute("customer");
         if (session.getAttribute("customer") == null) {
@@ -197,7 +199,6 @@ public class AdminController {
             return "login";
         }
         try {
-            item.setImage(image.getBytes());
             itemService.addItem(item);
             return "redirect:/shopping/items/";
         } catch (Exception e) {

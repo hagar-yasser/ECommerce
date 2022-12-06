@@ -44,7 +44,7 @@
     </div>
     <div class="from-row md-4">
      <label for="image">Select an image to upload</label>
-     <input type="file" cssClass="form-control" name="image"/>
+     <form:input path="image" type="file" cssClass="form-control" id="image"/>
     </div>
 
 

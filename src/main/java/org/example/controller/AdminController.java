@@ -162,7 +162,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/addItem/")
+    @GetMapping("addItem")
     public String getAddItem(HttpSession session, Model model) {
 
         try {
@@ -182,9 +182,12 @@ public class AdminController {
         }
 
     }
+//    public String addItem(HttpSession session, @RequestParam("image") CommonsMultipartFile image, @ModelAttribute("item") Item item, Model model) {
 
-    @PostMapping("/addItem/")
-    public String addItem(HttpSession session, @RequestParam("image") CommonsMultipartFile image, @ModelAttribute("item") Item item, Model model) {
+
+    @RequestMapping(value = "addItem", method = RequestMethod.POST)
+
+    public String addItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
 
         try {
             Customer customer = (Customer) session.getAttribute("customer");
@@ -195,9 +198,9 @@ public class AdminController {
             if (customer == null) {
                 return "redirect:/shopping/login/login";
             }
-            item.setImage(image.getBytes());
+//            item.setImage(image.getBytes());
             itemService.addItem(item);
-            return "redirect:/shopping/items/";
+            return "redirect:/shopping/items";
         } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
             return "error";

@@ -21,7 +21,9 @@
 <h3 style ="color:red">${error }</h3>
 <div class="card">
        <div class="card-body">
-    <form:form modelAttribute="item" method="post" enctype="multipart/form-data">
+<%--           method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/shopping/admin/addItem"--%>
+    <form:form modelAttribute="item" method="post" action="${pageContext.request.contextPath}/shopping/admin/addItem">
+
         <div class="from-row md-4">
             <label for="name">Name</label>
             <form:input path="name" cssClass="form-control" id="name"/>
@@ -42,10 +44,10 @@
      <label for="rating">Rating</label>
      <form:input path="rating" cssClass="form-control" id="rating"/>
     </div>
-    <div class="from-row md-4">
-     <label for="image">Select an image to upload</label>
-     <input type="file" cssClass="form-control" name="image"/>
-    </div>
+<%--    <div class="from-row md-4">--%>
+<%--     <label for="image">Select an image to upload</label>--%>
+<%--     <input type="file" cssClass="form-control" name="image"/>--%>
+<%--    </div>--%>
 
 
         <br>

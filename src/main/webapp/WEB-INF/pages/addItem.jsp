@@ -44,12 +44,12 @@
     </div>
     <div class="from-row md-4">
      <label for="image">Select an image to upload</label>
-     <form:input path="image" type="file" cssClass="form-control" id="image"/>
+     <input type="file" cssClass="form-control" name="image"/>
     </div>
 
 
         <br>
-        <input type="submit" value="add Item" class="btn btn-primary">
+        <input type="submit" value="add Item" class="btn btn-primary" class="form-control" >
     </form:form>
         <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 

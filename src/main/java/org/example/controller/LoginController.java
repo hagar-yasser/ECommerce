@@ -42,7 +42,7 @@ public class LoginController {
                 session.setAttribute("customer", customer);
                 //return "success";
                 if(customer.getIsAdmin()){  // to let the admin manage other admins and items
-                    return "redirect:/shopping/items/allForAdmin";
+                    return "redirect:/shopping/admin/showAllItems/";
                 }
                 return "redirect:/shopping/items/all";
             } else if (customer.getEmail().equals(email) && !customer.getPassword().equals(password) && customer.getWrongPasswordTrials() < 3) {
@@ -68,8 +68,8 @@ public class LoginController {
             session.invalidate();
             return "redirect:/shopping/login/login";
         }catch (Exception e) {
-            modelMap.addAttribute("message", e.getMessage());
-            return "error";
+            modelMap.addAttribute("error", e.getMessage());
+            return "login";
         }
     }
 

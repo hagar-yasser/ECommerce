@@ -9,6 +9,7 @@
 </head>
 <body class="container">
 <h1>Admins List</h1>
+<h3 style ="color:red">${error }</h3>
 <div class="card">
        <div class="card-body">
 <table class="table">

@@ -8,6 +8,7 @@
 </head>
 <body class="container">
     <h1>Items</h1>
+    <h3 style ="color:red">${error }</h3>
 
 
  <div class="card">
@@ -44,13 +45,13 @@
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
                 </c:if>
-                <c:if test="${item.image ==null}">
-                       <td></td>
+                <c:if test="${item.image==null}">
+                    <td>No image</td>
                 </c:if>
 
                  <td>
                    <a href="${pageContext.request.contextPath }/shopping/admin/updateItem/${item.itemId}">Update</a>
-                   | <a href="${pageContext.request.contextPath }/shopping/admin/deleteItem/${item.itemId}" onclick="return confirm('Are you sure?')">Delete</a>
+                   | <a href="${pageContext.request.contextPath }/shopping/admin/deleteItem/${item.itemId}" onclick="return confirm('Are you sure to delete item?')">Delete</a>
                     </td>
 
             </tr>
@@ -60,12 +61,14 @@
     </tbody>
 
 </table>
+<a href="${pageContext.request.contextPath }/shopping/items/"><input class="btn btn-primary" type="submit" value="Search in items" /></a>
+<a href="${pageContext.request.contextPath }/shopping/admin/addAdmin"><input class="btn btn-primary" type="submit" value="Add Admin" /></a>
+<a href="${pageContext.request.contextPath }/shopping/admin/showAllAdmins"><input class="btn btn-primary" type="submit" value="Show All Admins" /></a>
+<a href="${pageContext.request.contextPath }/shopping/admin/addItem/"><input class="btn btn-primary" type="submit" value="Add Item" /></a>
 <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 </div>
 </div>
-<%
 
-%>
 
 </body>
 </html>

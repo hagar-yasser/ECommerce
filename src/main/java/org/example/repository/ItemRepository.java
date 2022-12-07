@@ -18,4 +18,6 @@ public interface ItemRepository {
     public Item getItemById(int itemId,Session session);
     public boolean decrementItemQuantity(int itemId,int decrementCounter,Session session);
 
+
+    List<Item> getItemsByNameCategoryRatingPrice(String name, String category, int rating, double price, Session session);
 }

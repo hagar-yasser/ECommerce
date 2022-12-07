@@ -20,7 +20,7 @@ public class MyOrderRepositoryImpl implements MyOrderRepository{
 
     @Override
     public List<MyOrder> showAllOrder(int customerId,Session session) {
-        Query query = session.createQuery("FROM MyOrder where owner_id = :owner_id ORDER BY MyOrderDate",MyOrder.class);
+        Query query = session.createQuery("FROM MyOrder where owner_id = :owner_id ORDER BY MyOrderDate DESC",MyOrder.class);
         query.setParameter("owner_id",customerId);
         List<MyOrder> myOrderList = query.list();
         return myOrderList;

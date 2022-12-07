@@ -29,42 +29,24 @@
        <div class="card-body">
         <table class="table">
                     <tbody>
-               <form method="get" action="${pageContext.request.contextPath }/shopping/items/all">
-               <tr>
-               <td><input class="btn btn-primary" type="submit" value="Show All Items" /></td>
-               </tr>
-               </form>
-
-               <form method="get" action="${pageContext.request.contextPath }/shopping/items/name">
+               <form method="get" action="${pageContext.request.contextPath }/shopping/items/searchConjunction">
                <tr>
                <td>Name:</td>
                <td><input class="form-control" type="text" name="name"/></td>
-               <td><input class="btn btn-primary"type="submit" value="Filter Items By Name" /></td>
                </tr>
-               </form>
-
-               <form method="get" action="${pageContext.request.contextPath }/shopping/items/category">
                <tr>
                <td>Category:</td>
                <td><input class="form-control" type="text" name="category"/></td>
-               <td><input class="btn btn-primary" type="submit" value="Filter Items By Category" /></td>
                </tr>
-               </form>
-
-               <form method="get" action="${pageContext.request.contextPath }/shopping/items/rating">
                <tr>
                <td>Rating:</td>
                <td><input class="form-control" type="text" name="rating"/></td>
-               <td><input class="btn btn-primary" type="submit" value="Filter Items By Rating" /></td>
                </tr>
-               </form>
-               <form method="get" action="${pageContext.request.contextPath }/shopping/items/price">
                <tr>
                <td>Price:</td>
                <td><input class="form-control" type="text" name="price"/></td>
-               <td><input class="btn btn-primary" type="submit" value="Filter Items By Price" /></td>
                </tr>
-
+               <input class="btn btn-primary" type="submit" value="Show Items" />
                </form>
                         </tbody>
 

@@ -78,6 +78,67 @@ public class ItemRepositoryImpl implements ItemRepository {
         itemsByPrice=itemsByPriceQuery.list();
         return itemsByPrice;
     }
+    @Override
+    public List<Item> getItemsByNameCategoryRatingPrice
+            (String name, String category, int rating, double price, Session session) {
+        List<Item>itemsByNameCategoryRatingPrice;
+        String queryConjunctionString="from Item";
+        boolean queryHasWhereClause=false;
+        if(price!=-1){
+            if(!queryHasWhereClause){
+                queryHasWhereClause=true;
+                queryConjunctionString+=" where";
+            }
+            queryConjunctionString+=" price = :price";
+        }
+        if(rating!=-1){
+            if(!queryHasWhereClause){
+                queryHasWhereClause=true;
+                queryConjunctionString+=" where";
+            }
+            else {
+                queryConjunctionString+=" and";
+            }
+            queryConjunctionString+=" rating = :rating";
+        }
+        if(!name.equals("")){
+            if(!queryHasWhereClause){
+                queryHasWhereClause=true;
+                queryConjunctionString+=" where";
+            }
+            else {
+                queryConjunctionString+=" and";
+            }
+            queryConjunctionString+=" name like :name";
+        }
+        if(!category.equals("")){
+            if(!queryHasWhereClause){
+                queryHasWhereClause=true;
+                queryConjunctionString+=" where";
+            }
+            else {
+                queryConjunctionString+=" and";
+            }
+            queryConjunctionString+=" category like :category";
+        }
+
+        Query itemsByNameCategoryRatingPriceQuery=
+                session.createQuery(queryConjunctionString,Item.class);
+        if(price!=-1){
+            itemsByNameCategoryRatingPriceQuery.setParameter("price",price);
+        }
+        if(rating!=-1){
+            itemsByNameCategoryRatingPriceQuery.setParameter("rating",rating);
+        }
+        if(!name.equals("")){
+            itemsByNameCategoryRatingPriceQuery.setParameter("name","%"+name+"%");
+        }
+        if(!category.equals("")){
+            itemsByNameCategoryRatingPriceQuery.setParameter("category","%"+category+"%");
+        }
+        itemsByNameCategoryRatingPrice=itemsByNameCategoryRatingPriceQuery.list();
+        return itemsByNameCategoryRatingPrice;
+    }
 
     @Override
     public Item getItemById(int itemId,Session session) {
@@ -97,4 +158,6 @@ public class ItemRepositoryImpl implements ItemRepository {
         return true;
 
     }
+
+
 }

@@ -47,6 +47,13 @@
      <form:input path="rating" cssClass="form-control" id="rating" type="number" min="0" max="5"/>
     </div>
     <div class="from-row md-4">
+       <c:if test="${item.image!=null}">
+               <img src=${imageUrlForJSP} alt="wrong Image" width="100 "height="100"/>
+              <p> <input type ="checkbox" name="deleteImage" value="deleteImage"/>Delete Image</p>
+       </c:if>
+       <c:if test="${item.image==null}">
+           <p>No image</p>
+       </c:if>
        <label for="image">Select an image to upload</label>
        <input type="file" cssClass="form-control" name="image"/>
     </div>

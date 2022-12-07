@@ -128,7 +128,7 @@
                 <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary"
                                                                                            type="submit"
                                                                                            value="Logout"/></a>
-                <a href="<spring:url value="/shopping/orders/submitOrder" />" class="btn btn-success pull-right"><span
+                <a href="<spring:url value="/shopping/orders/submitOrder" />" class="btn btn-primary"><span
                         class="glyphicon glyphicon-shopping-cart"></span> Check out</a>
 
 

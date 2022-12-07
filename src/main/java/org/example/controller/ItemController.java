@@ -134,5 +134,36 @@ public class ItemController {
             return "listItems";
         }
     }
+    @GetMapping("/searchConjunction")
+    public String getItemsByNameCategoryRatingPrice
+            (@RequestParam("price") String priceString,@RequestParam("name") String name,@RequestParam("category") String category,
+             @RequestParam("rating") String ratingString, Model model,HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        if(customer==null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        try{
+            double price =-1;
+            int rating =-1;
+            if(!priceString.equals("")){
+                price= Double.parseDouble(priceString);
+            }
+            if(!ratingString.equals("")){
+                rating= Integer.parseInt(ratingString);
+            }
+            List<Item> itemsByNameCategoryRatingPrice =
+                    itemService.getItemsByNameCategoryRatingPrice(name,category,rating,price);
+            model.addAttribute("itemsList", itemsByNameCategoryRatingPrice);
+            if(customer.getIsAdmin()){
+                return "listItemsAdmin";
+            }
+            return "listItems";
+        }
+        catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "listItems";
+        }
+    }
 
 }

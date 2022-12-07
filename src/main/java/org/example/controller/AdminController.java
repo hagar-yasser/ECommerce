@@ -261,6 +261,9 @@ public class AdminController {
         try {
             Item item = itemService.getItemById(itemId);
             model.addAttribute("item", item);
+            if(item.getImage()!=null) {
+                model.addAttribute("imageUrlForJSP", item.getImageUrlForJSP());
+            }
             return "updateItem";
         }
         catch (Exception e){
@@ -269,7 +272,7 @@ public class AdminController {
         }
     }
     @RequestMapping(value="/updateItem" , method= RequestMethod.POST,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String updateItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, @RequestParam("image") MultipartFile image,Model model) {
+    public String updateItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, @RequestParam("image") MultipartFile image,@RequestParam(value = "deleteImage",defaultValue = "null") String deleteImage,Model model) {
 
 //    @PostMapping("/updateItem/")
 //    public String updateItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
@@ -284,9 +287,19 @@ public class AdminController {
             return "login";
         }
         try {
-            byte[] contents = image.getBytes();
-            Blob blob = new SerialBlob(contents);
-            item.setImage(contents);
+            if(!image.isEmpty()) {
+                byte[] contents = image.getBytes();
+                Blob blob = new SerialBlob(contents);
+                item.setImage(contents);
+            }
+            else{
+                if(!deleteImage.equals("null")){
+                    item.setImage(null);
+                }
+                else{
+                    item.setImage(itemService.getItemById(item.getItemId()).getImage());
+                }
+            }
             itemService.updateItem(item);
             return "redirect:/shopping/items/allForAdmin";
 

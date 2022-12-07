@@ -96,7 +96,7 @@
 </table>
 <a href="${pageContext.request.contextPath }/shopping/items/"><input class="btn btn-primary" type="submit" value="Search in items" /></a>
 <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
-           <a href="<spring:url value="/shopping/cart/showAll" />" class="btn btn-success pull-right"><span
+           <a href="<spring:url value="/shopping/cart/showAll" />" class="btn btn-primary" ><span
                    class="glyphicon glyphicon-shopping-cart"></span>Show Cart</a>
 </div>
 </div>

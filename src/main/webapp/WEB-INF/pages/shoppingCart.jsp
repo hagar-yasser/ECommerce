@@ -129,7 +129,7 @@
                                                                                            type="submit"
                                                                                            value="Logout"/></a>
                 <a href="<spring:url value="/shopping/orders/submitOrder" />" class="btn btn-primary"><span
-                        class="glyphicon glyphicon-shopping-cart"></span> Check out</a>
+                        class="glyphicon glyphicon-shopping-cart"></span> Order</a>
 
 
     </div>

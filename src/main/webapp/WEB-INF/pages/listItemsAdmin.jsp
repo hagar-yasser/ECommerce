@@ -5,8 +5,40 @@
 <head>
     <title>Items</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        .topnav {
+          overflow: hidden;
+          background-color: #333;
+          width:device-width;
+        }
+
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+
+        .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+        }
+
+        .topnav a.active {
+          background-color: #0499aa;
+          color: white;
+        }
+        </style>
 </head>
 <body class="container">
+    <div class="topnav">
+      <a class="active" href="${pageContext.request.contextPath }/shopping/admin/showAllItems/">Home</a>
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About</a>
+    </div>
     <h1>Items</h1>
     <h3 style ="color:red">${error }</h3>
 
@@ -65,6 +97,8 @@
 <a href="${pageContext.request.contextPath }/shopping/admin/addAdmin"><input class="btn btn-primary" type="submit" value="Add Admin" /></a>
 <a href="${pageContext.request.contextPath }/shopping/admin/showAllAdmins"><input class="btn btn-primary" type="submit" value="Show All Admins" /></a>
 <a href="${pageContext.request.contextPath }/shopping/admin/addItem/"><input class="btn btn-primary" type="submit" value="Add Item" /></a>
+<a href="${pageContext.request.contextPath }/shopping/cart/showAll"><input class="btn btn-primary" type="submit" value="Show Cart" /></a>
+<a href="${pageContext.request.contextPath }/shopping/orders/showAllOrder"><input class="btn btn-primary" type="submit" value="Show Orders" /></a>
 <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 </div>
 </div>

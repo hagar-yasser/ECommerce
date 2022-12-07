@@ -23,6 +23,7 @@
         <mapping class="org.example.model.MyOrderItemId"/>
         <mapping class="org.example.model.CustomerItem"/>
         <mapping class="org.example.model.CustomerItemId"/>
+        <mapping class="org.example.model.VerificationToken"/>
 
 
     </session-factory>

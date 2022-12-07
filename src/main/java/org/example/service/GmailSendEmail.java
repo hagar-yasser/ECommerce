@@ -15,6 +15,9 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 import org.apache.commons.codec.binary.Base64;
+import org.example.model.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Session;
@@ -31,6 +34,9 @@ import static javax.mail.Message.RecipientType.TO;
 @Service
 public class GmailSendEmail {
 
+    @Autowired
+    private Environment environment;
+
 
     /**
      * Creates an authorized Credential object.
@@ -39,12 +45,14 @@ public class GmailSendEmail {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
+
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, GsonFactory jsonFactory)
             throws IOException {
+
         // Load client secrets.
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(jsonFactory,
-                        new InputStreamReader(GmailSendEmail.class.getResourceAsStream("client.json")));
+                        new InputStreamReader(new FileInputStream("client.json")));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
@@ -65,7 +73,7 @@ public class GmailSendEmail {
      * @param message  the content of message
      * @throws Exception If the credentials.json file cannot be found.
      */
-    public void sendEmail(String subject, String message) throws Exception {
+    public void sendEmail(String subject, String message, Customer customer) throws Exception {
 
         NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         GsonFactory jsonFactory= GsonFactory.getDefaultInstance();
@@ -77,7 +85,7 @@ public class GmailSendEmail {
         Session session = Session.getDefaultInstance(props, null);
         MimeMessage email = new MimeMessage(session);
         email.setFrom(new InternetAddress("anasroshdiii@gmail.com"));
-        email.addRecipient(TO,new InternetAddress("anasroshdiii@gmail.com"));//customer email
+        email.addRecipient(TO,new InternetAddress(customer.getEmail()));//customer email
         email.setSubject(subject);
         email.setText(message);
 

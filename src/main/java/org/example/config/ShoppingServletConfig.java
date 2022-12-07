@@ -40,12 +40,12 @@ public class ShoppingServletConfig implements WebMvcConfigurer {
     public SessionFactory sessionFactory(){
         return new MetadataSources(standardServiceRegistry()).buildMetadata().buildSessionFactory();
     }
-    @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(100000);
-        return multipartResolver;
-    }
+//    @Bean(name = "multipartResolver")
+//    public CommonsMultipartResolver multipartResolver() {
+//        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//        multipartResolver.setMaxUploadSize(100000);
+//        return multipartResolver;
+//    }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // front resource.

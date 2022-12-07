@@ -19,13 +19,23 @@ public class MyOrderRepositoryImpl implements MyOrderRepository{
         return myOrder;
     }
 
-    public List<MyOrder> showAllOrder() {
+    @Override
+    public List<MyOrder> showAllOrder(int customerId) {
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Customer.class)
                 .buildSessionFactory();
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("FROM MyOrder ORDER BY MyOrderDate");
+//        Query query = session.createQuery("FROM MyOrder ORDER BY MyOrderDate");
+        Query query = session.createQuery("SELECT i.item_id,i.category,i.name,i.price,i.quantity " +
+                "MyOrder.myOrderDate \n" +
+                "FROM item i" +
+                "JOIN MyOrderItem ON i.item_id = MyOrderItem.item_id"+
+                "JOIN MyOrder ON MyOrder.order_id = MyOrderItem.myOrder_id " +
+                "Where MyOrder.order_id =: customerId");
+        query.setParameter("customerId",customerId);
         List<MyOrder> myOrderList = query.getResultList();
         return myOrderList;
     }
+
+
 }

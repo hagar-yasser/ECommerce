@@ -41,7 +41,7 @@
         </div>
         <div class="from-row">
              <label for="password">PassWord</label>
-             <form:input path="password" cssClass="form-control" id="password" required="required"/>
+             <form:input path="password" cssClass="form-control" type="password" id="password" required="required"/>
              <form:errors path="password" cssClass="error"/>
         </div>
         <div class="from-row">

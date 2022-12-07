@@ -25,7 +25,7 @@ public class MyOrderController {
 //        model.addAttribute("customerIdDTO",new CustomerIdDTO());
 //        return "submitOrderForm";
 //    }
-    @PostMapping("/submitOrder")
+    @GetMapping("/submitOrder")
     public String submitOrder(Model model, HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){

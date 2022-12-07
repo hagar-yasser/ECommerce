@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("/Cart")
+@RequestMapping("/cart")
 public class CustomerItemController {
 
     private final CustomerItemService customerItemService;
@@ -76,7 +76,7 @@ public class CustomerItemController {
                 return "addItem";
             }
         }
-        return "redirect:/shopping/Cart/showAll";
+        return "redirect:/shopping/items/all";
     }
 
 
@@ -90,7 +90,7 @@ public class CustomerItemController {
             try {
                 customerItemService.deleteFromCustomerItem(customer.getCustomerId(), itemId);
 
-                return "redirect:/shopping/Cart/showAll";
+                return "redirect:/shopping/cart/showAll";
             }catch (Exception e){
                 model.addAttribute("error", e.getMessage());
                 return "shoppingCart";
@@ -108,7 +108,7 @@ public class CustomerItemController {
         } else {
             try {
                 customerItemService.deleteCustomerItem(customer.getCustomerId());
-                return "redirect:/shopping/Cart/showAll";
+                return "redirect:/shopping/cart/showAll";
             }catch (Exception e){
                 model.addAttribute("error", e.getMessage());
                 return "shoppingCart";

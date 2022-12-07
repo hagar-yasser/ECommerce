@@ -51,7 +51,7 @@
 
                  <td>
                    <a href="${pageContext.request.contextPath }/shopping/admin/updateItem/${item.itemId}">Update</a>
-                   | <a href="${pageContext.request.contextPath }/shopping/admin/deleteItem/${item.itemId}" onclick="return confirm('Are you sure?')">Delete</a>
+                   | <a href="${pageContext.request.contextPath }/shopping/admin/deleteItem/${item.itemId}" onclick="return confirm('Are you sure to delete item?')">Delete</a>
                     </td>
 
             </tr>

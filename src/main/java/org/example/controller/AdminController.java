@@ -206,7 +206,7 @@ public class AdminController {
             Blob blob = new SerialBlob(contents);
             item.setImage(contents);
             itemService.addItem(item);
-            return "redirect:/shopping/items/all";
+            return "redirect:/shopping/items/allForAdmin";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "addItem";
@@ -288,7 +288,7 @@ public class AdminController {
             Blob blob = new SerialBlob(contents);
             item.setImage(contents);
             itemService.updateItem(item);
-            return "redirect:/shopping/items/all";
+            return "redirect:/shopping/items/allForAdmin";
 
 
 

@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -65,7 +67,7 @@
 
     <c:if test="${!empty itemsList}">
         <c:forEach var="item" items="${itemsList}">
-            <form method="post" action="${pageContext.request.contextPath }/shopping/Cart/addItem/${item.itemId}">
+            <form method="post" action="${pageContext.request.contextPath }/shopping/cart/addItem/${item.itemId}">
             <tr>
                 <td>${item.itemId}</td>
                 <td>${item.name}</td>
@@ -94,6 +96,8 @@
 </table>
 <a href="${pageContext.request.contextPath }/shopping/items/"><input class="btn btn-primary" type="submit" value="Search in items" /></a>
 <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
+           <a href="<spring:url value="/shopping/cart/showAll" />" class="btn btn-success pull-right"><span
+                   class="glyphicon glyphicon-shopping-cart"></span>Show Cart</a>
 </div>
 </div>
 

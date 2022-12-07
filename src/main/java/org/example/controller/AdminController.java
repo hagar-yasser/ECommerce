@@ -301,7 +301,7 @@ public class AdminController {
                 }
             }
             itemService.updateItem(item);
-            return "redirect:/shopping/items/allForAdmin";
+            return "redirect:/shopping/admin/showAllItems/";
 
 
 

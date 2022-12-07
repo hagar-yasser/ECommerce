@@ -142,7 +142,7 @@ span.psw {
 <h3 style ="color:red">${error }</h3>
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
-<a href="${pageContext.request.contextPath }/shopping/login/login"><input class="b" style="width:auto;" type="submit" value="Register" /></a>
+<a href="${pageContext.request.contextPath }/shopping/registration/register"><input class="b" style="width:auto;" type="submit" value="Register" /></a>
 
 <div id="id01" class="modal">
 
@@ -166,7 +166,7 @@ span.psw {
 
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw"><a href="${pageContext.request.contextPath }/shopping/login/logout">Register</a></span>
+      <span class="psw"><a href="${pageContext.request.contextPath }/shopping/registration/register">Register</a></span>
     </div>
   </form>
 </div>

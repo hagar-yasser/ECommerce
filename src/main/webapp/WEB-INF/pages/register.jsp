@@ -16,6 +16,10 @@
 
 </head>
 <body>
+<div class="container">
+<h1>Registration</h1>
+<div class="card">
+       <div class="card-body">
     <form:form modelAttribute="customer" method="post">
         <div class="from-row md-4">
             <label for="firstName">First Name</label>
@@ -39,9 +43,11 @@
         </div>
 
         <br>
-        <input type="submit" value="Register">
+        <input type="submit" class="btn btn-primary"  value="Register">
     </form:form>
-
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>

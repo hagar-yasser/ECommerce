@@ -84,7 +84,7 @@
 
                 <td><input class="form-control" type="number" name="quantity" required="required" min="0"/></td>
 
-                <td><input class="btn btn-primary" type="submit" value="add to cart" /></td>
+                <td><input class="btn btn-primary" type="submit" value="add to cart" onclick="return alert('Added to cart successfully')"/></td>
 
             </tr>
             </form>
@@ -95,7 +95,9 @@
 
 </table>
 <a href="${pageContext.request.contextPath }/shopping/items/"><input class="btn btn-primary" type="submit" value="Search in items" /></a>
+<a href="${pageContext.request.contextPath }/shopping/orders/showAllOrder"><input class="btn btn-primary" type="submit" value="Show Orders" /></a>
 <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
+
            <a href="<spring:url value="/shopping/cart/showAll" />" class="btn btn-primary" ><span
                    class="glyphicon glyphicon-shopping-cart"></span>Show Cart</a>
 </div>

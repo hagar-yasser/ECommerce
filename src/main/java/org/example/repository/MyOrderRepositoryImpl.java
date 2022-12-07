@@ -29,7 +29,7 @@ public class MyOrderRepositoryImpl implements MyOrderRepository{
     @Override
     public List<MyOrderItem> showItemsForOrder(int Orderid, Session session) {
         List<MyOrderItem> items=new ArrayList<>();
-        Query query =session.createQuery("select oi from OrderItem oi join oi.myOrderItemId.myOrder o where o.myOrderId = :orderId",MyOrderItem.class);
+        Query query =session.createQuery("select oi from MyOrderItem oi join oi.myOrderItemId.myOrder o where o.myOrderId = :orderId",MyOrderItem.class);
         query.setParameter("orderId",Orderid);
         items=query.list();
         return items;

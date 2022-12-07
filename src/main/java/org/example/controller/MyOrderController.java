@@ -1,10 +1,7 @@
 package org.example.controller;
 
 import org.example.dto.CustomerIdDTO;
-import org.example.model.Customer;
-import org.example.model.Item;
-import org.example.model.MyOrder;
-import org.example.model.MyOrderItem;
+import org.example.model.*;
 import org.example.service.MyOrderService;
 import org.hibernate.Session;
 import org.springframework.http.ResponseEntity;
@@ -39,11 +36,11 @@ public class MyOrderController {
         }
         try {
             myOrderService.submitOrder(customer.getCustomerId());
-            return "done";
+            return "showAllOrder";
         }
         catch (Exception e){
             model.addAttribute("error",e.getMessage());
-            return "done";
+            return "showAllOrder";
         }
     }
     @GetMapping("/showAllOrder")
@@ -71,17 +68,19 @@ public class MyOrderController {
         }
 
         try {
-            List<MyOrderItem> myOrderList =  myOrderService.showItemsForOrder(Orderid);
-            List<Item> items = new ArrayList<>();
-            for(MyOrderItem myOrderItem: myOrderList){
-                items.add(myOrderItem.getItem());
+            List<MyOrderItem> myOrderItemList =  myOrderService.showItemsForOrder(Orderid);
+
+            model.addAttribute("orderItems", myOrderItemList);
+            double sum = 0;
+            for (MyOrderItem orderItem : myOrderItemList) {
+                sum += (orderItem.getItem().getPrice()) * (orderItem.getQuantity());
             }
-            model.addAttribute("itemsList", items);
-            return "listItems";
+            model.addAttribute("totalPrice", sum);
+            return "listAllOrderItems";
         }
         catch (Exception e){
-            model.addAttribute("message",e.getMessage());
-            return "error";
+            model.addAttribute("error",e.getMessage());
+            return "listAllOrderItems";
         }
 
     }

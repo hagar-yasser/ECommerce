@@ -1,9 +1,6 @@
 package org.example.service;
 
-import org.example.model.Customer;
-import org.example.model.CustomerItem;
-import org.example.model.MyOrder;
-import org.example.model.MyOrderItem;
+import org.example.model.*;
 import org.example.repository.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -66,10 +63,23 @@ public class MyOrderService {
 
     }
 
-    public List<MyOrder> showAllOrder(int customerId){
-        return myOrderRepository.showAllOrder(customerId);
+    public List<MyOrder> showAllOrder(int customerId) throws Exception {
+        try(Session session=sessionFactory.openSession()){
+            return myOrderRepository.showAllOrder(customerId,session);
+        }
+        catch (Exception e){
+            throw new Exception("couldn't return Order for customer ");
+        }
+
     }
 
 
-
+    public List<MyOrderItem> showItemsForOrder(int orderId) throws Exception {
+        try(Session session=sessionFactory.openSession()){
+            return myOrderRepository.showItemsForOrder(orderId,session);
+        }
+        catch (Exception e){
+            throw new Exception("couldn't return all details for that order");
+        }
+    }
 }

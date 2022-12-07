@@ -2,8 +2,11 @@ package org.example.controller;
 
 import org.example.dto.CustomerIdDTO;
 import org.example.model.Customer;
+import org.example.model.Item;
 import org.example.model.MyOrder;
+import org.example.model.MyOrderItem;
 import org.example.service.MyOrderService;
+import org.hibernate.Session;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,11 +48,11 @@ public class MyOrderController {
     @GetMapping("/showAllOrder")
     public String showAllOrder(Model model,HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
-//        if(customer==null){
-//            return "redirect:/shopping/login/login";
-//        }
+        if(customer==null){
+            return "redirect:/shopping/login/login";
+        }
         try {
-            List<MyOrder> myOrderList =  myOrderService.showAllOrder(1);
+            List<MyOrder> myOrderList =  myOrderService.showAllOrder(customer.getCustomerId());
             model.addAttribute("order", myOrderList);
             return "showAllOrder";
         }
@@ -56,6 +60,29 @@ public class MyOrderController {
             model.addAttribute("message",e.getMessage());
             return "error";
         }
+    }
+
+    @GetMapping("/showItemForOrder/{orderid}")
+    public String showItemForOrder(Model model,@PathVariable("orderid") int Orderid,HttpSession session){
+        Customer customer=(Customer) session.getAttribute("customer");
+        if(customer==null){
+            return "redirect:/shopping/login/login";
+        }
+
+        try {
+            List<MyOrderItem> myOrderList =  myOrderService.showItemsForOrder(Orderid);
+            List<Item> items = new ArrayList<>();
+            for(MyOrderItem myOrderItem: myOrderList){
+                items.add(myOrderItem.getItem());
+            }
+            model.addAttribute("itemsList", items);
+            return "listItems";
+        }
+        catch (Exception e){
+            model.addAttribute("message",e.getMessage());
+            return "error";
+        }
+
     }
 
 }

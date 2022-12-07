@@ -53,6 +53,9 @@ public class GmailSendEmail {
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(jsonFactory,
                         new InputStreamReader(new FileInputStream("client.json")));
+//        GoogleClientSecrets clientSecrets =
+//                GoogleClientSecrets.load(jsonFactory,
+//                        new InputStreamReader(UserRegisterServiceImpl.class.getResourceAsStream("client.json")));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(

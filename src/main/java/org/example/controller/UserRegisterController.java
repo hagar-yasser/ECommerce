@@ -26,16 +26,14 @@ public class UserRegisterController {
     private UserRegisterServiceImpl userRegisterService;
     private VerificationTokenRepository verificationTokenRepository;
     private GmailSendEmail gmailSendEmail;
-    private SendGridEmailer sendGridEmailer;
 
     @Autowired
     public UserRegisterController(UserRegisterServiceImpl userRegisterServiceImpl,
                                   VerificationTokenRepository verificationTokenRepository,
-                                  GmailSendEmail gmailSendEmail,SendGridEmailer sendGridEmailer) {
+                                  GmailSendEmail gmailSendEmail) {
         this.userRegisterService = userRegisterServiceImpl;
         this.verificationTokenRepository = verificationTokenRepository;
         this.gmailSendEmail = gmailSendEmail;
-        this.sendGridEmailer = sendGridEmailer;
 
     }
 

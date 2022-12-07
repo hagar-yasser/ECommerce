@@ -14,24 +14,24 @@
 <table class="table">
     <thead class="table table-dark">
     <tr>
-        <td>Item id</td>
-        <td>category</td>
-        <td>name</td>
-        <td>price</td>
-        <td>quantity</td>
-        <td>myOderDate</td>
+        <td>Date</td>
+        <td>Order_id</td>
+        <td>Options</td>
+
+
     </tr>
     </thead>
     <tbody>
     <c:if test="${!empty order}">
         <c:forEach var="order" items="${order}">
             <tr>
-                <td>${order.item_id}</td>
-                <td>${order.category}</td>
-                <td>${order.name}</td>
-                <td>${order.price}</td>
-                <td>${order.quantity}</td>
-                <td>${order.myOrderDate}</td>
+                <td>${order.MyOrderDate}</td>
+
+                <td>${order.myOrderId}</td>
+
+                <td><a href="${pageContext.request.contextPath }/shopping/orders/showItemForOrder/${order.myOrderId}"><input class="btn btn-primary" type="submit" value="Check Order" /></a></td>
+
+
             </tr>
         </c:forEach>
 

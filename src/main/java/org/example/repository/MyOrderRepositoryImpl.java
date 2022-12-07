@@ -1,14 +1,13 @@
 package org.example.repository;
 
-import org.example.model.Customer;
-import org.example.model.MyOrder;
-import org.example.model.VerificationToken;
+import org.example.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,22 +19,20 @@ public class MyOrderRepositoryImpl implements MyOrderRepository{
     }
 
     @Override
-    public List<MyOrder> showAllOrder(int customerId) {
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Customer.class)
-                .buildSessionFactory();
-        Session session = sessionFactory.openSession();
-//        Query query = session.createQuery("FROM MyOrder ORDER BY MyOrderDate");
-        Query query = session.createQuery("SELECT i.item_id,i.category,i.name,i.price,i.quantity " +
-                "MyOrder.myOrderDate \n" +
-                "FROM item i" +
-                "JOIN MyOrderItem ON i.item_id = MyOrderItem.item_id"+
-                "JOIN MyOrder ON MyOrder.order_id = MyOrderItem.myOrder_id " +
-                "Where MyOrder.order_id =: customerId");
-        query.setParameter("customerId",customerId);
-        List<MyOrder> myOrderList = query.getResultList();
+    public List<MyOrder> showAllOrder(int customerId,Session session) {
+        Query query = session.createQuery("FROM MyOrder where owner_id = :owner_id ORDER BY MyOrderDate",MyOrder.class);
+        query.setParameter("owner_id",customerId);
+        List<MyOrder> myOrderList = query.list();
         return myOrderList;
     }
 
+    @Override
+    public List<MyOrderItem> showItemsForOrder(int Orderid, Session session) {
+        List<MyOrderItem> items=new ArrayList<>();
+        Query query =session.createQuery("select oi from OrderItem oi join oi.myOrderItemId.myOrder o where o.myOrderId = :orderId",MyOrderItem.class);
+        query.setParameter("orderId",Orderid);
+        items=query.list();
+        return items;
+    }
 
 }

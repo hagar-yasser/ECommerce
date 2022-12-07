@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.apache.catalina.User;
+import org.checkerframework.checker.units.qual.C;
 import org.example.model.Customer;
 import org.example.model.VerificationToken;
 import org.example.service.UserRegisterService;
@@ -13,18 +14,15 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class UserRegisterRepository {
-
-    private UserRegisterService userRegisterService;
-
-    @Autowired
-    public UserRegisterRepository(UserRegisterService userRegisterService) {
-        this.userRegisterService = userRegisterService;
-    }
 
     public Customer findByEmail(String email){
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
@@ -52,20 +50,19 @@ public class UserRegisterRepository {
             Transaction transaction = session.beginTransaction();
 
             //hashing password
-//            String hashPassword = userRegisterService.hashPassword(customer);
-//            Query query = session.createQuery("INSERT INTO Customer (customerId, firstName, lastName,email" +
-//                    "password,isAdmin,isLoggedIn,isActivated,wrongPasswordTrials) " +
-//                    "VALUES ?, ?, ?,?\" +\n" +
-//                    "\"?,?,?,?," +
-//                    "?");
+
+//            String hashPassword = hashPassword(customer);
+//            Query query = session.createQuery("INSERT INTO Customer (customerId, firstName, isActivated,isAdmin" +
+//                    "isLoggedIn,lastName,password,wrongPasswordTrials) " +
+//                    "values (?, ?, ?,?,?,?,?,?,?)");
 //            query.setParameter("1",customer.getCustomerId());
 //            query.setParameter("2",customer.getFirstName());
-//            query.setParameter("3",customer.getLastName());
-//            query.setParameter("4",customer.getEmail());
-//            query.setParameter("5",hashPassword);
-//            query.setParameter("6",customer.getIsAdmin());
-//            query.setParameter("7",customer.getIsLoggedIn());
-//            query.setParameter("8",customer.getIsActivated());
+//            query.setParameter("3",customer.getIsActivated());
+//            query.setParameter("4",customer.getIsAdmin());
+//            query.setParameter("5",customer.getIsLoggedIn());
+//            query.setParameter("6",customer.getLastName());
+//            query.setParameter("7",hashPassword);
+//            query.setParameter("8",customer.getPassword());
 //            query.setParameter("9",customer.getWrongPasswordTrials());
 //            query.executeUpdate();
 
@@ -76,6 +73,35 @@ public class UserRegisterRepository {
             session.close();
         }
 
+
+    }
+
+    public String hashPassword(Customer customer){
+
+        String password = customer.getPassword();
+        /* MessageDigest instance for hashing using SHA256 */
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+        /* digest() method called to calculate message digest of an input and return array of byte */
+        byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
+
+        /* Convert byte array of hash into digest */
+        BigInteger number = new BigInteger(1, hash);
+
+        /* Convert the digest into hex value */
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        /* Pad with leading zeros */
+        while (hexString.length() < 32)
+        {
+            hexString.insert(0, '0');
+        }
+        return hexString.toString();
 
     }
 

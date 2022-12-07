@@ -8,5 +8,9 @@ import java.util.List;
 public interface CustomerItemRepository {
     public List<CustomerItem> getShoppingCartOfCustomer(int customerId, Session session);
     public void deleteShoppingCartOfCustomer(int customerId, Session session);
+    public void addItemToCustomerItem(CustomerItem customerItem , Session session);
+//    public void deleteItemFromCustomerItem(CustomerItem customerItem ,Session session);
+public void updateQuantityCustomerItem(int customerId, int itemId,int quantity , Session session);     public void deleteItemFromCustomerItem(CustomerItem customerItem ) ;
 
+//    void updateCustomerItemQuantity(int customerId, int itemId, Session session);
 }

@@ -36,11 +36,11 @@
       </div>
       <div class="from-row md-4">
          <label for="quantity">Quantity</label>
-         <form:input path="quantity" cssClass="form-control" id="quantity"/>
+         <form:input path="quantity" cssClass="form-control" id="quantity" type="number" min="0"/>
     </div>
     <div class="from-row md-4">
      <label for="rating">Rating</label>
-     <form:input path="rating" cssClass="form-control" id="rating"/>
+     <form:input path="rating" cssClass="form-control" id="rating" type="number" min="0" max="5"/>
     </div>
     <div class="from-row md-4">
      <label for="image">Select an image to upload</label>
@@ -49,7 +49,7 @@
 
 
         <br>
-        <input type="submit" value="add Item" class="btn btn-primary">
+        <input type="submit" value="add Item" class="btn btn-primary" class="form-control" >
     </form:form>
         <a href="${pageContext.request.contextPath }/shopping/login/logout"><input class="btn btn-primary" type="submit" value="Logout" /></a>
 

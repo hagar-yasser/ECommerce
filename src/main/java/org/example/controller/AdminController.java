@@ -7,6 +7,7 @@ import org.example.repository.ItemRepository;
 import org.example.service.AdminService;
 import org.example.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.Valid;
+import java.sql.Blob;
 import java.util.List;
 import java.util.Map;
 
@@ -35,172 +38,178 @@ public class AdminController {
     @GetMapping("/showAllAdmins")
     public String showAllAdmins(Model model, HttpSession session) {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (session.getAttribute("customer") == null) {
-                return "redirect:/shopping/login/login";
-            }
-
             List<Customer> listOfAdmins = adminService.showAllAdmins();
             model.addAttribute("admins", listOfAdmins);
             return "adminList";  //the view that shows all the admins
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "adminList";
         }
     }
 
     @GetMapping("/addAdmin")
     public String showFormForAdd(Model model, HttpSession session) {
 
+        Customer customer1 = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer1.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer1 = (Customer) session.getAttribute("customer");
-            if (!customer1.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (session.getAttribute("customer") == null) {
-                return "redirect:/shopping/login/login";
-            }
-
             Customer customer = new Customer();
             customer.setIsAdmin(true);
             model.addAttribute("admin", customer);
             return "addAdmin"; //the view that has the form to add admin
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "addAdmin";
         }
     }
 
     @RequestMapping(value = "addAdmin", method = RequestMethod.POST)
     public String addAdmin(@Valid @ModelAttribute("admin") Customer admin,BindingResult bindingResult, Model model, HttpSession session) {
 
-            try {
-                Customer customer = (Customer) session.getAttribute("customer");
-                if (!customer.getIsAdmin()){
-                    model.addAttribute("error","you must login as admin first");
-                    return "login";
-                }
-                if (session.getAttribute("customer") == null) {
-                    return "redirect:/shopping/login/login";
-                }
-
-                admin.setIsAdmin(true);
-                adminService.addAdmin(admin);
-                return "redirect:/shopping/admin/showAllAdmins";
-            } catch (Exception e) {
-                model.addAttribute("error", e.getMessage());
-                return "addAdmin";
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
+        try {
+            admin.setIsAdmin(true);
+            adminService.addAdmin(admin);
+            return "redirect:/shopping/admin/showAllAdmins";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "addAdmin";
             }
     }
 
     @RequestMapping(value = "deleteAdmin/{id}", method = RequestMethod.GET)
     public String deleteAdmin(@PathVariable int id, Model model, HttpSession session) {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (session.getAttribute("customer") == null) {
-                return "redirect:/shopping/login/login";
-            }
-
             adminService.deleteAdminById(id);
             return "redirect:/shopping/admin/showAllAdmins";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "adminList";
         }
     }
     @RequestMapping(value="updateForm/{id}",method = RequestMethod.GET)
     public String showFormForUpdate(@PathVariable int id,
                                     Model model, HttpSession session) {
+        Customer customer1 = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer1.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer1 = (Customer) session.getAttribute("customer");
-            if (!customer1.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (session.getAttribute("customer") == null) {
-                return "redirect:/shopping/login/login";
-            }
-
             Customer customer = adminService.getCustomerById(id);
             model.addAttribute("admin", customer);
             return "updateForm"; //show the view with the  data to be updated
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "adminList";
         }
     }
 
     @RequestMapping(value = "updateForm/{id}", method = RequestMethod.POST)
     public String showFormForUpdate(@PathVariable int id, @ModelAttribute("admin") Customer admin, Model model, HttpSession session) {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (session.getAttribute("customer") == null) {
-                return "redirect:/shopping/login/login";
-            }
-
             adminService.updateAdmin(id, admin);
             return "redirect:/shopping/admin/showAllAdmins";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "updateForm";
         }
     }
 
     @GetMapping("/addItem/")
     public String getAddItem(HttpSession session, Model model) {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (customer == null) {
-                return "redirect:/shopping/login/login";
-            }
             model.addAttribute("item",new Item());
             return "addItem";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "addItem";
         }
 
     }
 
-    @PostMapping("/addItem/")
-    public String addItem(HttpSession session, @RequestParam("image") CommonsMultipartFile image, @ModelAttribute("item") Item item, Model model) {
+    //@PostMapping("/addItem/")
+    @RequestMapping(value="/addItem/" , method= RequestMethod.POST,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String addItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, @RequestParam("image") MultipartFile image,Model model) {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (customer == null) {
-                return "redirect:/shopping/login/login";
-            }
-            item.setImage(image.getBytes());
+
+            byte[] contents = image.getBytes();
+            Blob blob = new SerialBlob(contents);
+            item.setImage(contents);
             itemService.addItem(item);
-            return "redirect:/shopping/items/";
+            return "redirect:/shopping/items/allForAdmin";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "addItem";
         }
     }
 
@@ -218,63 +227,78 @@ public class AdminController {
     @GetMapping("/showAllItems/")
     public String showAllItems(HttpSession session,Model model) throws Exception {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (customer == null) {
-                return "redirect:/shopping/login/login";
-            }
-
             List<Item> allItems = itemService.getAllItems();
             model.addAttribute("itemsList", allItems);
             return "listItemsAdmin";
         }
         catch (Exception e){
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "listItemsAdmin";
         }
     }
     @GetMapping("/updateItem/{itemId}")
     public String getUpdateItemForm(@PathVariable("itemId")int itemId,HttpSession session, Model model) throws Exception {
+
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (customer == null) {
-                return "redirect:/shopping/login/login";
-            }
             Item item = itemService.getItemById(itemId);
             model.addAttribute("item", item);
             return "updateItem";
         }
         catch (Exception e){
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "listItemsAdmin";
         }
     }
+    @RequestMapping(value="/updateItem" , method= RequestMethod.POST,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String updateItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, @RequestParam("image") MultipartFile image,Model model) {
 
-    @PostMapping("/updateItem/")
-    public String updateItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
+//    @PostMapping("/updateItem/")
+//    public String updateItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (customer == null) {
-                return "redirect:/shopping/login/login";
-            }
+            byte[] contents = image.getBytes();
+            Blob blob = new SerialBlob(contents);
+            item.setImage(contents);
             itemService.updateItem(item);
-            return "redirect:/shopping/admin/showAllItems/";
+            return "redirect:/shopping/items/allForAdmin";
+
+
+
+
+//
+//            itemService.updateItem(item);
+//            return "redirect:/shopping/admin/showAllItems/";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "updateItem";
         }
     }
 
@@ -283,21 +307,21 @@ public class AdminController {
     public String deleteItem(@PathVariable("itemId") int itemId,
                              Model model, HttpSession session) {
 
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (session.getAttribute("customer") == null) {
+            model.addAttribute("error","You should login at first");
+            return "login";
+        }
+        if (!customer.getIsAdmin()){
+            model.addAttribute("error","you should login as admin at first");
+            return "login";
+        }
         try {
-            Customer customer = (Customer) session.getAttribute("customer");
-            if (!customer.getIsAdmin()){
-                model.addAttribute("error","you must login as admin first");
-                return "login";
-            }
-            if (customer == null) {
-                return "redirect:/shopping/login/login";
-            }
-
             itemService.deleteItem(itemId);
             return "redirect:/shopping/admin/showAllItems/";
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
+            model.addAttribute("error", e.getMessage());
+            return "listItemsAdmin";
         }
     }
 

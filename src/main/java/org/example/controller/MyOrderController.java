@@ -26,19 +26,20 @@ public class MyOrderController {
 //        model.addAttribute("customerIdDTO",new CustomerIdDTO());
 //        return "submitOrderForm";
 //    }
-    @PostMapping("/submitOrder")
+    @GetMapping("/submitOrder")
     public String submitOrder(Model model, HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try {
             myOrderService.submitOrder(customer.getCustomerId());
             return "done";
         }
         catch (Exception e){
-            model.addAttribute("message",e.getMessage());
-            return "error";
+            model.addAttribute("error",e.getMessage());
+            return "done";
         }
     }
     @GetMapping("/showAllOrder")

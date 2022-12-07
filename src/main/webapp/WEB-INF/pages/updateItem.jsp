@@ -40,11 +40,15 @@
       </div>
       <div class="from-row md-4">
          <label for="quantity">Quantity</label>
-         <form:input path="quantity" cssClass="form-control" id="quantity"/>
+         <form:input path="quantity" cssClass="form-control" id="quantity" type="number" min="0"/>
     </div>
     <div class="from-row md-4">
      <label for="rating">Rating</label>
-     <form:input path="rating" cssClass="form-control" id="rating"/>
+     <form:input path="rating" cssClass="form-control" id="rating" type="number" min="0" max="5"/>
+    </div>
+    <div class="from-row md-4">
+       <label for="image">Select an image to upload</label>
+       <input type="file" cssClass="form-control" name="image"/>
     </div>
 
 

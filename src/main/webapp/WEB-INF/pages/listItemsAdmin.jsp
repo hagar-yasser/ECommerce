@@ -8,6 +8,7 @@
 </head>
 <body class="container">
     <h1>Items</h1>
+    <h3 style ="color:red">${error }</h3>
 
 
  <div class="card">
@@ -44,13 +45,13 @@
                 <c:if test="${item.image!=null}">
                     <td><img src=${item.imageUrlForJSP} alt="wrong Image" width="100 "height="100"/></td>
                 </c:if>
-                <c:if test="${item.image ==null}">
-                       <td></td>
+                <c:if test="${item.image==null}">
+                    <td>No image</td>
                 </c:if>
 
                  <td>
                    <a href="${pageContext.request.contextPath }/shopping/admin/updateItem/${item.itemId}">Update</a>
-                   | <a href="${pageContext.request.contextPath }/shopping/admin/deleteItem/${item.itemId}" onclick="return confirm('Are you sure?')">Delete</a>
+                   | <a href="${pageContext.request.contextPath }/shopping/admin/deleteItem/${item.itemId}" onclick="return confirm('Are you sure to delete item?')">Delete</a>
                     </td>
 
             </tr>

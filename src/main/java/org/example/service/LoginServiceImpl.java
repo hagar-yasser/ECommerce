@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginService{
         try {
             loginRepository.setLoggedIn(id);
         }catch (Exception e){
-            throw new Exception("Couldn't get Items from the database");
+            throw new Exception("Couldn't log in");
         }
     }
 
@@ -37,7 +37,7 @@ public class LoginServiceImpl implements LoginService{
         try {
             loginRepository.setLoggedOut(id);
         }catch (Exception e){
-            throw new Exception("Couldn't get Items from the database");
+            throw new Exception("Couldn't logout ");
         }
     }
 
@@ -46,7 +46,7 @@ public class LoginServiceImpl implements LoginService{
         try {
             loginRepository.deActivateUser(id);
         }catch (Exception e){
-            throw new Exception("Couldn't get Items from the database");
+            throw new Exception("Couldn't de activate user");
         }
     }
 
@@ -55,7 +55,7 @@ public class LoginServiceImpl implements LoginService{
         try {
             loginRepository.incrementWrongPassTrials(id);
         }catch (Exception e){
-            throw new Exception("Couldn't get Items from the database");
+            throw new Exception("Couldn't increment wrong password trials");
         }
     }
 }

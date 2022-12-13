@@ -33,22 +33,22 @@ public class Main {
         StandardServiceRegistry registry=new StandardServiceRegistryBuilder().configure().build();
         SessionFactory sessionFactory=new MetadataSources(registry).buildMetadata().buildSessionFactory();
         ApplicationContext applicationContext=new AnnotationConfigApplicationContext(ShoppingServletConfig.class);
-        System.out.println("Hello world!");
-        ItemRepository itemRepository=applicationContext.getBean(ItemRepository.class);
-        Item item=new Item();
-        item.setCategory("category3");
-        item.setName("name");
-        item.setPrice(16.9);
-        item.setQuantity(2);
-        item.setRating(0);
-        String photoFileName="/home/voidDev/Downloads/img_avatar2.png";
-        byte[] photoBytes = readBytesFromFile(photoFileName);
-        item.setImage(photoBytes);
-        try(Session session=sessionFactory.openSession()){
-            Transaction transaction=session.beginTransaction();
-            itemRepository.addItem(item,session);
-            transaction.commit();
-        }
+//        System.out.println("Hello world!");
+//        ItemRepository itemRepository=applicationContext.getBean(ItemRepository.class);
+//        Item item=new Item();
+//        item.setCategory("category3");
+//        item.setName("name");
+//        item.setPrice(16.9);
+//        item.setQuantity(2);
+//        item.setRating(0);
+//        String photoFileName="/home/voidDev/Downloads/img_avatar2.png";
+//        byte[] photoBytes = readBytesFromFile(photoFileName);
+//        item.setImage(photoBytes);
+//        try(Session session=sessionFactory.openSession()){
+//            Transaction transaction=session.beginTransaction();
+//            itemRepository.addItem(item,session);
+//            transaction.commit();
+//        }
 
     }
 }

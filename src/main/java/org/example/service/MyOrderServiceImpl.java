@@ -67,19 +67,19 @@ public class MyOrderServiceImpl implements MyOrderService {
     }
 
     public List<MyOrder> showAllOrder(int customerId) throws Exception {
-        try(Session session=sessionFactory.openSession()){
-            return myOrderRepository.showAllOrder(customerId,session);
+        try{
+            return myOrderRepository.showAllOrder(customerId);
         }
         catch (Exception e){
-            throw new Exception("couldn't return Order for customer ");
+           throw new Exception("couldn't return Order for customer ");
         }
 
     }
 
 
     public List<MyOrderItem> showItemsForOrder(int orderId) throws Exception {
-        try(Session session=sessionFactory.openSession()){
-            return myOrderRepository.showItemsForOrder(orderId,session);
+        try{
+            return myOrderRepository.showItemsForOrder(orderId);
         }
         catch (Exception e){
             throw new Exception("couldn't return all details for that order");

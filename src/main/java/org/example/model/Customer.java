@@ -30,6 +30,19 @@ public class Customer {
     private int wrongPasswordTrials;
 
     public Customer(){}
+
+    public Customer(int customerId, String firstName, String lastName, String email, String password, boolean isAdmin, boolean isLoggedIn, boolean isActivated, int wrongPasswordTrials) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.isLoggedIn = isLoggedIn;
+        this.isActivated = isActivated;
+        this.wrongPasswordTrials = wrongPasswordTrials;
+    }
+
     public Customer(String firstName, String lastName,
                     String email, String password, boolean isAdmin, boolean isLoggedIn, boolean isActivated, int wrongPasswordTrials) {
         this.firstName = firstName;

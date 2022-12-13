@@ -36,7 +36,7 @@ public class MyOrderController {
         }
         try {
             myOrderService.submitOrder(customer.getCustomerId());
-            return "showAllOrder";
+            return "redirect:/shopping/orders/showAllOrder";
         }
         catch (Exception e){
             model.addAttribute("error",e.getMessage());

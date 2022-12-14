@@ -21,18 +21,12 @@ public class MyOrderController {
     public MyOrderController(MyOrderService myOrderService) {
         this.myOrderService = myOrderService;
     }
-//    @GetMapping("/submitOrder")
-//    public String getSubmitOrderForm(Model model){
-//
-//        model.addAttribute("customerIdDTO",new CustomerIdDTO());
-//        return "submitOrderForm";
-//    }
     @GetMapping("/submitOrder")
     public String submitOrder(Model model, HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){
             model.addAttribute("error","You should login at first");
-            return "login";
+            return "redirect:/shopping/login/login";
         }
         try {
             myOrderService.submitOrder(customer.getCustomerId());
@@ -55,8 +49,8 @@ public class MyOrderController {
             return "showAllOrder";
         }
         catch (Exception e){
-            model.addAttribute("message",e.getMessage());
-            return "error";
+            model.addAttribute("error",e.getMessage());
+            return "showAllOrder";
         }
     }
 

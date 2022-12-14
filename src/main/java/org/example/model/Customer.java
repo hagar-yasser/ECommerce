@@ -54,6 +54,19 @@ public class Customer {
         this.isActivated = isActivated;
         this.wrongPasswordTrials = wrongPasswordTrials;
     }
+
+    public Customer(CustomerBuilder customerBuilder) {
+        this.customerId = customerBuilder.customerId;
+        this.firstName = customerBuilder.firstName;
+        this.lastName = customerBuilder.lastName;
+        this.email = customerBuilder.email;
+        this.password = customerBuilder.password;
+        this.wrongPasswordTrials = customerBuilder.wrongPasswordTrials;
+        this.isAdmin= customerBuilder.isAdmin;
+        this.isLoggedIn=customerBuilder.isLoggedIn;
+        this.isActivated= customerBuilder.isActivated;
+    }
+
     @Id
     @GeneratedValue
     public int getCustomerId() {
@@ -154,5 +167,43 @@ public class Customer {
                 ", isLoggedIn=" + isLoggedIn +
                 ", isVerified=" + isActivated +
                 '}';
+    }
+    //Builder class
+    public static class CustomerBuilder {
+        private int customerId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String password;
+        private boolean isAdmin = false;
+        private boolean isLoggedIn = false;
+        private boolean isActivated = false;
+        private int wrongPasswordTrials;
+
+        public CustomerBuilder(int customerId, String firstName, String lastName, String email, String password, int wrongPasswordTrials) {
+            this.customerId = customerId;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.password = password;
+            this.wrongPasswordTrials = wrongPasswordTrials;
+        }
+        public CustomerBuilder setAdmin(boolean admin) {
+            this.isAdmin = admin;
+            return this;
+        }
+
+        public CustomerBuilder setLoggedIn(boolean loggedIn) {
+            this.isLoggedIn = loggedIn;
+            return this;
+        }
+
+        public CustomerBuilder setActivated(boolean activated) {
+            this.isActivated = activated;
+            return this;
+        }
+        public Customer build(){
+            return new Customer(this);
+        }
     }
 }

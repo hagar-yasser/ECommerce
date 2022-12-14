@@ -1,6 +1,5 @@
 package org.example.service;
 
-import net.bytebuddy.asm.Advice;
 import org.example.model.*;
 import org.example.repository.*;
 import org.hibernate.Session;
@@ -10,19 +9,13 @@ import org.hibernate.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +32,8 @@ public class MyOrderServiceImplTest {
     private Session session;
     private Transaction transaction;
     private MyOrderServiceImpl myOrderService;
-    public MyOrderServiceImplTest(){
+    @Before
+    public void init() {
         myOrderRepository= Mockito.mock(MyOrderRepositoryImpl.class);
         sessionFactory=Mockito.mock(SessionFactory.class);
         session =Mockito.mock(Session.class);
@@ -55,12 +49,8 @@ public class MyOrderServiceImplTest {
                         myOrderItemRepository,
                         customerRepository,  itemRepository);
     }
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
     @Test
-    public void submitOrderTestCompletesWithoutException() throws Exception {
+    public void submitOrderTest_givenRepositoriesAndSessionFactory_CompletesWithoutThrowingExceptions() throws Exception {
         //Arrange
         LocalDate localDate = LocalDate.now();
         Item item1 = new Item();
@@ -103,7 +93,7 @@ public class MyOrderServiceImplTest {
         assertEquals(returnedOrder,myOrder);
     }
     @Test
-    public void submitOrderTestThrowsException(){
+    public void submitOrderTest_givenAnErrorWithHibernateCreatingSession_ThrowsException(){
        //Arrange
         when(sessionFactory.openSession()).thenThrow(new RuntimeException());
 
@@ -113,7 +103,7 @@ public class MyOrderServiceImplTest {
 
     }
     @Test
-    public void showAllOrderTestCompletesWithoutException() throws Exception {
+    public void showAllOrderTest_givenValidCustomerId_ReturnsAllOrders() throws Exception {
         //Arrange
         Customer owner=new Customer();
         owner.setCustomerId(1);
@@ -129,12 +119,21 @@ public class MyOrderServiceImplTest {
         assertEquals(myOrders,returnedOrders);
     }
     @Test
-    public void showAllOrderTestThrowsException(){
+    public void showAllOrderTest_givenCustomerIdWithNoOrders_ReturnsEmptyList() throws Exception {
+        List<MyOrder>emptyList=new ArrayList<>();
+        when(myOrderRepository.showAllOrder(1)).thenReturn(emptyList);
+        //Act
+        List<MyOrder>returnedOrders=myOrderService.showAllOrder(1);
+        //Assert
+        assertEquals(emptyList,returnedOrders);
+    }
+    @Test
+    public void showAllOrderTest_givenHibernateException_ThrowsException(){
         when(myOrderRepository.showAllOrder(1)).thenThrow(new RuntimeException());
         Assertions.assertThrows(Exception.class,()->myOrderService.showAllOrder(1));
     }
     @Test
-    public void showItemsForOrderTestCompletesWithoutException() throws Exception {
+    public void showItemsForOrderTest_givenOrderIdHavingItems_ReturnsItemsInThatOrder() throws Exception {
         //Arrange
         LocalDate localDate=LocalDate.now();
         Item item1=new Item();
@@ -164,7 +163,18 @@ public class MyOrderServiceImplTest {
 
     }
     @Test
-    public void showItemsForOrderTestThrowsException(){
+    public void showItemsForOrderTest_givenOrderIdNotHavingItems_ReturnsEmptyList() throws Exception {
+        //Arrange
+        List<MyOrderItem>emptyList=new ArrayList<>();
+        when(myOrderRepository.showItemsForOrder(1)).thenReturn(emptyList);
+        //Act
+        List<MyOrderItem>returnedMyOrderItems=myOrderService.showItemsForOrder(1);
+        //Assert
+        assertEquals(emptyList,returnedMyOrderItems);
+
+    }
+    @Test
+    public void showItemsForOrderTest_givenHibernatException_ThrowsException(){
         when(myOrderRepository.showItemsForOrder(1)).thenThrow(new RuntimeException());
         Assertions.assertThrows(Exception.class,()->myOrderService.showItemsForOrder(1));
     }

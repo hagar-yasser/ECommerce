@@ -52,19 +52,7 @@ public class UserRegisterRepository {
             //hashing password
 
 //            String hashPassword = hashPassword(customer);
-//            Query query = session.createQuery("INSERT INTO Customer (customerId, firstName, isActivated,isAdmin" +
-//                    "isLoggedIn,lastName,password,wrongPasswordTrials) " +
-//                    "values (?, ?, ?,?,?,?,?,?,?)");
-//            query.setParameter("1",customer.getCustomerId());
-//            query.setParameter("2",customer.getFirstName());
-//            query.setParameter("3",customer.getIsActivated());
-//            query.setParameter("4",customer.getIsAdmin());
-//            query.setParameter("5",customer.getIsLoggedIn());
-//            query.setParameter("6",customer.getLastName());
-//            query.setParameter("7",hashPassword);
-//            query.setParameter("8",customer.getPassword());
-//            query.setParameter("9",customer.getWrongPasswordTrials());
-//            query.executeUpdate();
+//            customer.setPassword(hashPassword);
 
             session.save(customer);
             transaction.commit();

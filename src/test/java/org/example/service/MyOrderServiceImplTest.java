@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 
 import org.hibernate.Transaction;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,7 +40,8 @@ public class MyOrderServiceImplTest {
     private Session session;
     private Transaction transaction;
     private MyOrderServiceImpl myOrderService;
-    public MyOrderServiceImplTest(){
+    @Before
+    public void init() {
         myOrderRepository= Mockito.mock(MyOrderRepositoryImpl.class);
         sessionFactory=Mockito.mock(SessionFactory.class);
         session =Mockito.mock(Session.class);
@@ -54,10 +56,6 @@ public class MyOrderServiceImplTest {
                         customerItemRepository,
                         myOrderItemRepository,
                         customerRepository,  itemRepository);
-    }
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
     }
     @Test
     public void submitOrderTestCompletesWithoutException() throws Exception {

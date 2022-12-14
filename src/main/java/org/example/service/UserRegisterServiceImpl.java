@@ -18,7 +18,7 @@ public class UserRegisterServiceImpl implements UserRegisterService {
     private VerificationTokenRepository verificationTokenRepository;
     @Autowired
     public UserRegisterServiceImpl(UserRegisterRepository userRegisterRepository,
-                                   VerificationTokenRepository verificationTokenRepository) {
+                                   VerificationTokenRepository verificationTokenRepositoryf) {
 
         this.userRegisterRepository = userRegisterRepository;
         this.verificationTokenRepository = verificationTokenRepository;

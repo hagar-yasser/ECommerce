@@ -201,12 +201,13 @@ public class AdminController {
             return "login";
         }
         try {
-
-            byte[] contents = image.getBytes();
-            Blob blob = new SerialBlob(contents);
-            item.setImage(contents);
+            if(!image.isEmpty()) {
+                byte[] contents = image.getBytes();
+                Blob blob = new SerialBlob(contents);
+                item.setImage(contents);
+            }
             itemService.addItem(item);
-            return "redirect:/shopping/items/allForAdmin";
+            return "redirect:/shopping/admin/showAllItems/";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "addItem";

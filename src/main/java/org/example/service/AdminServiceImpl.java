@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService{
 
-    private final AdminRepository adminRepository;
+    private AdminRepository adminRepository;
 
     @Autowired
     public AdminServiceImpl(AdminRepository adminRepository) {

@@ -13,7 +13,7 @@ import java.util.List;
 public interface MyOrderRepository {
     public MyOrder createNewMyOrder(MyOrder myOrder, Session session);
 
-    public List<MyOrder> showAllOrder(int customerId,Session session);
+    public List<MyOrder> showAllOrder(int customerId);
 
-    public List<MyOrderItem> showItemsForOrder(int Orderid,Session session);
+    public List<MyOrderItem> showItemsForOrder(int Orderid);
 }

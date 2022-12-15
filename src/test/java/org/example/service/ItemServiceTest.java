@@ -50,17 +50,24 @@ public class ItemServiceTest {
         when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
         when(sessionMock.beginTransaction()).thenReturn(transactionMock);
         when(itemRepositoryMock.getAllItems(any())).thenReturn(actualItemsList);
-//        doThrow(new Exception()).when(itemRepositoryMock.getAllItems(any()));
         List<Item> expectedItemList = itemService.getAllItems();
         assertNotNull(expectedItemList);
         assertEquals(expectedItemList, actualItemsList);
 
-        System.out.println(expectedItemList);
-        System.out.println(actualItemsList);
+
 
     }
-
     @Test
+    public void getAllItemsTest_ReturnException  (){
+        when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
+        when(sessionMock.beginTransaction()).thenReturn(transactionMock);
+        when(itemRepositoryMock.getAllItems(any())).thenThrow(RuntimeException.class);
+
+        assertThrows(Exception.class, ()-> itemService.getAllItems());
+    }
+
+
+        @Test
     public void getItemByIdTest_whenValidItemIDInput_ReturnItem() throws Exception {
         Item actualItem = new Item();
         actualItem.setItemId(1);
@@ -142,7 +149,7 @@ public class ItemServiceTest {
 
 
     @Test
-    public void addItemTest_SendValidItem_thenSaveToDB_ReturnSavdItem() throws Exception {
+    public void addItemTest_sendValidItem_thenSaveToDB_ReturnSavdItem() throws Exception {
         Item item = new Item();
         item.setItemId(1);
         item.setName("Kia");
@@ -191,11 +198,12 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void deleteItemTest_SendInvalidItemId_ThenThrowException() throws Exception {
 
-//        when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
-//        when(sessionMock.beginTransaction()).thenReturn(transactionMock);
+    public void deleteItemTest_sendInvalidItemId_thenThrowException() throws Exception {
+
         doThrow(new RuntimeException()).when(itemRepositoryMock).deleteItem(any(), any());
+
+
         assertThrows(Exception.class, () -> itemService.deleteItem(anyInt()));
 
 
@@ -222,11 +230,50 @@ public class ItemServiceTest {
     @Test
     public void updateItemTest_sendNull_ThenReturnException() throws Exception {
 
-//        when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
+        when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
 //        when(sessionMock.beginTransaction()).thenReturn(transactionMock);
         doThrow(new RuntimeException()).when(itemRepositoryMock).updateItem(eq(null), any());
         assertThrows(Exception.class, () -> itemService.updateItem(null));
     }
+@Test
+    public void getItemsByNameCategoryRatingPriceTest_sendValidInput_returnItemList() throws Exception {
+        Item item = new Item();
+        item.setItemId(1);
+        item.setName("Kia");
+        item.setCategory("car");
+        item.setPrice(50000);
+        item.setRating(4);
+        List<Item> items= new ArrayList<>();
+        items.add(item);
+        when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
+        when(sessionMock.beginTransaction()).thenReturn(transactionMock);
+        when (itemRepositoryMock.getItemsByNameCategoryRatingPrice
+                (anyString(),anyString(),anyInt(),anyDouble(),any()))
+                .thenReturn(items);
+        List<Item> expectedReturnItems= itemService.getItemsByNameCategoryRatingPrice
+                (item.getName(),item.getCategory(),item.getRating(),item.getPrice());
+
+        assertEquals(items,expectedReturnItems);
+
+    }
+    @Test
+    public void getItemsByNameCategoryRatingPriceTest_sendInvalidInput_returnException() throws Exception {
+        Item item = new Item();
+        item.setItemId(1);
+        item.setName("Kia");
+        item.setCategory("car");
+        item.setPrice(50000);
+        item.setRating(4);
+        when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
+        when (itemRepositoryMock.getItemsByNameCategoryRatingPrice
+                (anyString(),anyString(),anyInt(),anyDouble(),any()))
+                .thenThrow(RuntimeException.class);
+
+        assertThrows(Exception.class,()-> itemService.getItemsByNameCategoryRatingPrice
+                (item.getName(),item.getCategory(),item.getRating(),item.getPrice()));
+
+    }
 
 
-}
+
+    }

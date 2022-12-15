@@ -14,11 +14,11 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class adminServiceTest {
+public class AdminServiceTest {
     private AdminServiceImpl adminService;
     private AdminRepositoryImpl adminRepositoryMock;
 
-    public adminServiceTest() {
+    public AdminServiceTest() {
         adminRepositoryMock = Mockito.mock(AdminRepositoryImpl.class);
         adminService = new AdminServiceImpl(adminRepositoryMock);
     }

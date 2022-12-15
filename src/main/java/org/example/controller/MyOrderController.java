@@ -26,7 +26,7 @@ public class MyOrderController {
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){
             model.addAttribute("error","You should login at first");
-            return "redirect:/shopping/login/login";
+            return "login";
         }
         try {
             myOrderService.submitOrder(customer.getCustomerId());
@@ -41,7 +41,8 @@ public class MyOrderController {
     public String showAllOrder(Model model,HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try {
             List<MyOrder> myOrderList =  myOrderService.showAllOrder(customer.getCustomerId());
@@ -58,7 +59,8 @@ public class MyOrderController {
     public String showItemForOrder(Model model,@PathVariable("orderid") int Orderid,HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
 
         try {

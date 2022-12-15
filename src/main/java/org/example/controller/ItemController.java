@@ -67,73 +67,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping("/name")
-    public String getItemsByName(@RequestParam("name") String name, Model model,HttpSession session) {
-        if(session.getAttribute("customer")==null) {
-            model.addAttribute("error","You should login at first");
-            return "login";
-        }
-        try {
-            List<Item> itemsByName = itemService.getItemsByName(name);
-            model.addAttribute("itemsList", itemsByName);
-            return "listItems";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "listItems";
-        }
-    }
 
-    @GetMapping("/category")
-    public String getItemsByCategory(@RequestParam("category") String category, Model model,HttpSession session) {
-        if(session.getAttribute("customer")==null) {
-            model.addAttribute("error","You should login at first");
-            return "login";
-        }
-        try {
-            List<Item> itemsByCategory = itemService.getItemsByCategory(category);
-            model.addAttribute("itemsList", itemsByCategory);
-            return "listItems";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "listItems";
-        }
-    }
-
-    @GetMapping("/rating")
-    public String getItemsByRating(@RequestParam("rating") String ratingString, Model model,HttpSession session) {
-        if(session.getAttribute("customer")==null) {
-            model.addAttribute("error","You should login at first");
-            return "login";
-        }
-        try{
-        int rating = Integer.parseInt(ratingString);
-        List<Item> itemsByRating = itemService.getItemsByRating(rating);
-        model.addAttribute("itemsList", itemsByRating);
-        return "listItems";
-        }
-        catch (Exception e){
-            model.addAttribute("error",e.getMessage());
-            return "listItems";
-        }
-    }
-
-    @GetMapping("/price")
-    public String getItemsByPrice(@RequestParam("price") String priceString, Model model,HttpSession session) {
-        if(session.getAttribute("customer")==null) {
-            model.addAttribute("error","You should login at first");
-            return "login";
-        }
-        try{
-        double price = Double.parseDouble(priceString);
-        List<Item> itemsByPrice = itemService.getItemsByPrice(price);
-        model.addAttribute("itemsList", itemsByPrice);
-        return "listItems";
-        }
-        catch (Exception e){
-            model.addAttribute("error",e.getMessage());
-            return "listItems";
-        }
-    }
     @GetMapping("/searchConjunction")
     public String getItemsByNameCategoryRatingPrice
             (@RequestParam("price") String priceString,@RequestParam("name") String name,@RequestParam("category") String category,
@@ -162,7 +96,7 @@ public class ItemController {
         }
         catch (Exception e){
             model.addAttribute("error",e.getMessage());
-            return "listItems";
+            return "searchItems";
         }
     }
 

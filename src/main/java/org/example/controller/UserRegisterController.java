@@ -12,15 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
 import javax.validation.Valid;
 import java.util.Properties;
 
 @Controller
 @RequestMapping("/registration/")
+
 public class UserRegisterController {
 
     private UserRegisterServiceImpl userRegisterService;
@@ -65,7 +62,8 @@ public class UserRegisterController {
 
             //sending message with Gmail API
             String subject = "This verification mail to complete registration process";
-            String message = "Please Click on the link "+"http://localhost:8080/ECommerce/shopping/registration/verifyAccount?token="+verificationToken.getToken();
+            String message = "Please Click on the link "+"http://localhost:8080/ECommerce/shopping/registration/verifyAccount?token="
+                    +verificationToken.getToken();
             gmailSendEmail.sendEmail(subject,message,customer);
 
             return "verification";

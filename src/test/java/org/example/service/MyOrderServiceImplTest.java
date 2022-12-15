@@ -55,30 +55,12 @@ public class MyOrderServiceImplTest {
     public void submitOrderTest_givenRepositoriesAndSessionFactory_CompletesWithoutThrowingExceptions() throws Exception {
         //Arrange
         LocalDate localDate = LocalDate.now();
-        Item item1 = new Item();
-        item1.setItemId(1);
-        item1.setName("item1");
-        item1.setQuantity(3);
-        Item item2 = new Item();
-        item2.setItemId(2);
-        item2.setName("item2");
-        item2.setQuantity(1);
         Customer customer = new Customer();
         customer.setFirstName("owner");
         MyOrder myOrder = new MyOrder();
         myOrder.setMyOrderDate(localDate);
         myOrder.setOwner(customer);
-        CustomerItem customerItem1 = new CustomerItem();
-        customerItem1.setCustomer(customer);
-        customerItem1.setItem(item1);
-        customerItem1.setQuantity(3);
-        CustomerItem customerItem2 = new CustomerItem();
-        customerItem2.setCustomer(customer);
-        customerItem2.setItem(item2);
-        customerItem2.setQuantity(1);
-        List<CustomerItem> customerItems = new ArrayList<>();
-        customerItems.add(customerItem1);
-        customerItems.add(customerItem2);
+        List<CustomerItem>customerItems=generateAllValidCustomerCart(customer);
         when(sessionFactory.openSession()).thenReturn(session);
         when(session.beginTransaction()).thenReturn(transaction);
         when(customerItemRepository.getShoppingCartOfCustomer(1, session)).thenReturn(customerItems);
@@ -227,5 +209,27 @@ public class MyOrderServiceImplTest {
     public void showItemsForOrderTest_givenHibernatException_ThrowsException(){
         when(myOrderRepository.showItemsForOrder(1)).thenThrow(new RuntimeException());
         Assertions.assertThrows(Exception.class,()->myOrderService.showItemsForOrder(1));
+    }
+    public static List<CustomerItem>generateAllValidCustomerCart(Customer customer){
+        Item item1 = new Item();
+        item1.setItemId(1);
+        item1.setName("item1");
+        item1.setQuantity(3);
+        Item item2 = new Item();
+        item2.setItemId(2);
+        item2.setName("item2");
+        item2.setQuantity(1);
+        CustomerItem customerItem1 = new CustomerItem();
+        customerItem1.setCustomer(customer);
+        customerItem1.setItem(item1);
+        customerItem1.setQuantity(3);
+        CustomerItem customerItem2 = new CustomerItem();
+        customerItem2.setCustomer(customer);
+        customerItem2.setItem(item2);
+        customerItem2.setQuantity(1);
+        List<CustomerItem> customerItems = new ArrayList<>();
+        customerItems.add(customerItem1);
+        customerItems.add(customerItem2);
+        return customerItems;
     }
 }

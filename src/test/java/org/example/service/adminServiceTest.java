@@ -105,7 +105,7 @@ public class adminServiceTest {
     @Test(expected= Exception.class)
     public void getCustomerByIdTest_returnExceptionInCustomerEntity() throws Exception {
         when(adminRepositoryMock.getCustomerById(anyInt())).thenThrow(new RuntimeException());
-        adminService.getCustomerById(1);
+        adminService.getCustomerById(anyInt());
         verify(adminRepositoryMock, times(1)).getCustomerById(anyInt());
     }
 }

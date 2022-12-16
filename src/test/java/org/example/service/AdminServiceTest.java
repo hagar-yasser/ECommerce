@@ -14,11 +14,11 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class adminServiceTest {
+public class AdminServiceTest {
     private AdminServiceImpl adminService;
     private AdminRepositoryImpl adminRepositoryMock;
 
-    public adminServiceTest() {
+    public AdminServiceTest() {
         adminRepositoryMock = Mockito.mock(AdminRepositoryImpl.class);
         adminService = new AdminServiceImpl(adminRepositoryMock);
     }
@@ -105,7 +105,7 @@ public class adminServiceTest {
     @Test(expected= Exception.class)
     public void getCustomerByIdTest_returnExceptionInCustomerEntity() throws Exception {
         when(adminRepositoryMock.getCustomerById(anyInt())).thenThrow(new RuntimeException());
-        adminService.getCustomerById(1);
+        adminService.getCustomerById(anyInt());
         verify(adminRepositoryMock, times(1)).getCustomerById(anyInt());
     }
 }

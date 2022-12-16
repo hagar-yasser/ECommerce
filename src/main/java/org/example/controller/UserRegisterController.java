@@ -3,9 +3,7 @@ package org.example.controller;
 import org.example.model.Customer;
 import org.example.model.VerificationToken;
 import org.example.repository.VerificationTokenRepository;
-//import org.example.service.EmailService;
 import org.example.service.GmailSendEmail;
-import org.example.service.SendGridEmailer;
 import org.example.service.UserRegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.Properties;
 
 @Controller
 @RequestMapping("/registration/")
@@ -64,7 +61,7 @@ public class UserRegisterController {
             String subject = "This verification mail to complete registration process";
             String message = "Please Click on the link "+"http://localhost:8080/ECommerce/shopping/registration/verifyAccount?token="
                     +verificationToken.getToken();
-            gmailSendEmail.sendEmail(subject,message,customer);
+            gmailSendEmail.sendEmail(subject,message);
 
             return "verification";
         }
@@ -80,7 +77,6 @@ public class UserRegisterController {
         {
             Customer customer = userRegisterService.findByEmail(token.getUser().getEmail());
             customer.setIsActivated(true);
-//            userRegisterService.registerUser(customer);
         }
         else
         {

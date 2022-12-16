@@ -55,16 +55,9 @@ public class UserRegisterControllerTest {
 
     @Test
    public void testRegistration() throws Exception {
-//        mockMvc.perform(get("/register"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("register"))
-//                .andExpect(forwardedUrl("/WEB-INF/pages/register.jsp"));
-        when(model.addAttribute("customer")).thenReturn(model);
-        //Act
-        String view = userRegisterController.registration(model);
-        //Assert
-        Assert.assertEquals("register",view);
-
+        String view = "register";
+        String expectedView = userRegisterController.registration(model);
+        Assert.assertEquals(view, expectedView);
     }
 
 
@@ -100,7 +93,7 @@ public class UserRegisterControllerTest {
         when(userRegisterServiceImplMock.findByEmail(customer.getEmail())).thenReturn(null);
         doNothing().when(userRegisterServiceImplMock).registerUser(customer);
         doNothing().when(verificationTokenRepositoryMock).save(verificationToken);
-        doNothing().when(gmailSendEmailMock).sendEmail(subject,message,customer);
+        doNothing().when(gmailSendEmailMock).sendEmail(subject,message);
         //Act
         String view = userRegisterController.addUser(customer,bindingResult,model);
         //Assert

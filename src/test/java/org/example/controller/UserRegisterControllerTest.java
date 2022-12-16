@@ -92,8 +92,6 @@ public class UserRegisterControllerTest {
                 +verificationToken.getToken();
         when(userRegisterServiceImplMock.findByEmail(customer.getEmail())).thenReturn(null);
         doNothing().when(userRegisterServiceImplMock).registerUser(customer);
-        doNothing().when(verificationTokenRepositoryMock).save(verificationToken);
-        doNothing().when(gmailSendEmailMock).sendEmail(subject,message);
         //Act
         String view = userRegisterController.addUser(customer,bindingResult,model);
         //Assert

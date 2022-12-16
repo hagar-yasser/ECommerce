@@ -2,18 +2,26 @@ package org.example.service;
 
 import org.example.model.Customer;
 import org.example.repository.UserRegisterRepository;
+import org.example.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class UserRegisterServiceImpl implements UserRegisterService {
 
     private UserRegisterRepository userRegisterRepository;
+    private VerificationTokenRepository verificationTokenRepository;
     @Autowired
-    public UserRegisterServiceImpl(UserRegisterRepository userRegisterRepository) {
+    public UserRegisterServiceImpl(UserRegisterRepository userRegisterRepository,
+                                   VerificationTokenRepository verificationTokenRepositoryf) {
 
         this.userRegisterRepository = userRegisterRepository;
+        this.verificationTokenRepository = verificationTokenRepository;
     }
 
     @Override
@@ -59,6 +67,11 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 //    }
 
 
+//    @Override
+//    public void createVerificationToken(String token,Customer customer) {
+//        VerificationToken newUserToken = new VerificationToken(token,customer);
+//        verificationTokenRepository.save(newUserToken);
+//    }
 
 
 

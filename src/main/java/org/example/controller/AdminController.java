@@ -203,28 +203,13 @@ public class AdminController {
         try {
             if(!image.isEmpty()) {
                 byte[] contents = image.getBytes();
-                Blob blob = new SerialBlob(contents);
-                item.setImage(contents);
-            }
+                item.setImage(contents);}
             itemService.addItem(item);
             return "redirect:/shopping/admin/showAllItems/";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            return "addItem";
-        }
-    }
+            return "addItem";}}
 
-//    @GetMapping("/chooseItemToUpdate/")
-//    public String getChooseItemForm(HttpSession session, Model model) throws Exception {
-//        Customer customer = (Customer) session.getAttribute("customer");
-//        if (customer == null) {
-//            return "redirect:/shopping/login/login";
-//        }
-//        if (!customer.getIsAdmin()) {
-//            throw new Exception("You can't update an item because you are not an admin");
-//        }
-//        return "chooseItemToUpdate";
-//    }
     @GetMapping("/showAllItems/")
     public String showAllItems(HttpSession session,Model model) throws Exception {
 
@@ -275,69 +260,43 @@ public class AdminController {
     @RequestMapping(value="/updateItem" , method= RequestMethod.POST,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String updateItem(HttpSession session,@ModelAttribute("item") Item item,BindingResult bindingResult, @RequestParam("image") MultipartFile image,@RequestParam(value = "deleteImage",defaultValue = "null") String deleteImage,Model model) {
 
-//    @PostMapping("/updateItem/")
-//    public String updateItem(HttpSession session, @ModelAttribute("item") Item item, Model model) {
-
         Customer customer = (Customer) session.getAttribute("customer");
         if (session.getAttribute("customer") == null) {
             model.addAttribute("error","You should login at first");
-            return "login";
-        }
+            return "login";}
         if (!customer.getIsAdmin()){
             model.addAttribute("error","you should login as admin at first");
-            return "login";
-        }
-        try {
+            return "login";}try {
             if(!image.isEmpty()) {
                 byte[] contents = image.getBytes();
-                Blob blob = new SerialBlob(contents);
                 item.setImage(contents);
             }
             else{
                 if(!deleteImage.equals("null")){
-                    item.setImage(null);
-                }
+                    item.setImage(null);}
                 else{
                     item.setImage(itemService.getItemById(item.getItemId()).getImage());
                 }
             }
             itemService.updateItem(item);
             return "redirect:/shopping/admin/showAllItems/";
-
-
-
-
-//
-//            itemService.updateItem(item);
-//            return "redirect:/shopping/admin/showAllItems/";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            return "updateItem";
-        }
-    }
-
+            return "updateItem";}}
 
     @GetMapping("/deleteItem/{itemId}")
     public String deleteItem(@PathVariable("itemId") int itemId,
                              Model model, HttpSession session) {
-
         Customer customer = (Customer) session.getAttribute("customer");
         if (session.getAttribute("customer") == null) {
             model.addAttribute("error","You should login at first");
-            return "login";
-        }
+            return "login";}
         if (!customer.getIsAdmin()){
             model.addAttribute("error","you should login as admin at first");
-            return "login";
-        }
+            return "login";}
         try {
             itemService.deleteItem(itemId);
             return "redirect:/shopping/admin/showAllItems/";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            return "listItemsAdmin";
-        }
-    }
-
-
-}
+            return "listItemsAdmin";}}}

@@ -53,32 +53,7 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
         }
         return false;
     }
-
-
-    //    public void updateQuantityCustomerItem(int customerId, int itemId , int quantity) {
-//
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//
-//        List<CustomerItem> customerItems = getShoppingCartOfCustomer(customerId);
-//
-////            CustomerItemId customerItemId = new CustomerItemId();
-////            Customer customer = customerRepository.getCustomer(customerId, session);
-////            Item item = itemRepository.getItemById(itemId,session);
-////            customerItemId.setItem(item);
-////            customerItemId.setCustomer(customer);
-//        for (CustomerItem customerItem : customerItems) {
-//            {
-//                if ((customerItem.getCustomerItemId().getItem().getItemId()) == itemId) {
-//                    customerItem.setQuantity(customerItem.getQuantity() + quantity);
-//                    customerItemRepository.addItemToCustomerItem(customerItem, session);
-//                    transaction.commit();
-//
-//                }
-//            }
-//        }
-//    }
-    public void updateQuantityCustomerItem(int customerId, int itemId, int quantity) {
+    public void updateQuantityCustomerItem(int customerId, int itemId, int quantity) throws Exception {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
 
@@ -94,13 +69,11 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
                     break;
 
                 }
-
-
             }
         }
         catch (Exception e)
         {
-            e.getMessage();
+           throw  new Exception("Couldn't update the quantity of the customer item in the cart");
         }
     }
 
@@ -125,32 +98,25 @@ public class CustomerItemIServiceImpl implements CustomerItemService {
     }
 
     @Override
-    public void deleteFromCustomerItem(int customerId, int itemId) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-//        CustomerItem customerItem= new CustomerItem();
-//        CustomerItemId customerItemId = new CustomerItemId();
-//        Customer customer = customerRepository.getCustomer(customerId, session);
-//        Item item = itemRepository.getItemById(itemId,session);
-//        customerItemId.setItem(item);
-//        customerItemId.setCustomer(customer);
-//        customerItem.setCustomerItemId(customerItemId);
-        List<CustomerItem> customerItems = getShoppingCartOfCustomer(customerId);
-        for (CustomerItem customerItem : customerItems) {
-            {
-                if ((customerItem.getCustomerItemId().getItem().getItemId()) == itemId) {
-                    customerItemRepository.deleteItemFromCustomerItem(customerItem);
-                    break;
-                }
-            }
+    public void deleteFromCustomerItem(int customerId, int itemId) throws Exception {
+       try {
+           List<CustomerItem> customerItems = getShoppingCartOfCustomer(customerId);
+           for (CustomerItem customerItem : customerItems) {
+               {
+                   if ((customerItem.getCustomerItemId().getItem().getItemId()) == itemId) {
+                       customerItemRepository.deleteItemFromCustomerItem(customerItem);
+                       break;
+                   }
+               }
+           }
+       }catch (Exception e){
+           throw new Exception("Couldn't delete Item from the database");
+       }
 
-
-        }
     }
 
     public void deleteCustomerItem(int customerId) throws Exception {
-        try {
-            Session session = sessionFactory.openSession();
+        try(Session session = sessionFactory.openSession()){
             Transaction transaction = session.beginTransaction();
             customerItemRepository.deleteShoppingCartOfCustomer(customerId, session);
             transaction.commit();

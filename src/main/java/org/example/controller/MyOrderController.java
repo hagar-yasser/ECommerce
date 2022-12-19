@@ -21,12 +21,6 @@ public class MyOrderController {
     public MyOrderController(MyOrderService myOrderService) {
         this.myOrderService = myOrderService;
     }
-//    @GetMapping("/submitOrder")
-//    public String getSubmitOrderForm(Model model){
-//
-//        model.addAttribute("customerIdDTO",new CustomerIdDTO());
-//        return "submitOrderForm";
-//    }
     @GetMapping("/submitOrder")
     public String submitOrder(Model model, HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
@@ -47,7 +41,8 @@ public class MyOrderController {
     public String showAllOrder(Model model,HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
         try {
             List<MyOrder> myOrderList =  myOrderService.showAllOrder(customer.getCustomerId());
@@ -55,8 +50,8 @@ public class MyOrderController {
             return "showAllOrder";
         }
         catch (Exception e){
-            model.addAttribute("message",e.getMessage());
-            return "error";
+            model.addAttribute("error",e.getMessage());
+            return "showAllOrder";
         }
     }
 
@@ -64,7 +59,8 @@ public class MyOrderController {
     public String showItemForOrder(Model model,@PathVariable("orderid") int Orderid,HttpSession session){
         Customer customer=(Customer) session.getAttribute("customer");
         if(customer==null){
-            return "redirect:/shopping/login/login";
+            model.addAttribute("error","You should login at first");
+            return "login";
         }
 
         try {

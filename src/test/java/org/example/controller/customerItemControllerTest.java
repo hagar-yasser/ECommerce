@@ -91,7 +91,7 @@ public class customerItemControllerTest {
     }
 
     @Test
-    public void addItemToCartTest_givenNullCustomer_returnLoginPage() {
+    public void addItemToCartTest_givenNullCustomer_returnLoginPage() throws Exception {
         when(httpSessionMock.getAttribute(anyString())).thenReturn(null);
         String expectedReturnPage = customerItemController.addItemToCart(1, 1, httpSessionMock, modelMock);
 
@@ -101,7 +101,7 @@ public class customerItemControllerTest {
     }
 
     @Test
-    public void addItemToCartTest_givenValidCustomerAndRepeatedItem_UpdateItemQuantityAndReturnShowAllItemsPage() {
+    public void addItemToCartTest_givenValidCustomerAndRepeatedItem_UpdateItemQuantityAndReturnShowAllItemsPage() throws Exception {
 
         Customer customer = new Customer();
         customer.setCustomerId(1);
@@ -170,7 +170,7 @@ public class customerItemControllerTest {
     }
 
     @Test
-    public void deleteItemFromCartTest_whenValidCustomerAndValidItemId_throwsExpetion_thenReturnShoppingCartPage() {
+    public void deleteItemFromCartTest_whenValidCustomerAndValidItemId_throwsExpetion_thenReturnShoppingCartPage() throws Exception {
         Customer customer = new Customer();
         customer.setCustomerId(1);
 

@@ -51,16 +51,10 @@ public class CustomerItemController {
 
     }
 
-//    @GetMapping("/addItem")
-//    public String getAddItemToCartForm(Model model) {
-//        Item item = new Item();
-//        model.addAttribute("item", item);
-//        return "addItemToCart";
-//    }
 
 
     @RequestMapping(value = "/addItem/{itemId}", method = RequestMethod.POST)
-    public String addItemToCart(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity, HttpSession session, Model model) {
+    public String addItemToCart(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity, HttpSession session, Model model) throws Exception {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
             model.addAttribute("error","You should login at first");

@@ -16,13 +16,13 @@ public class UserRegisterServiceImplTest {
 
     private UserRegisterServiceImpl userRegisterServiceImpl;
     private UserRegisterRepository userRegisterRepositoryMock;
-    private VerificationToken verificationToken;
     private VerificationTokenRepository verificationTokenRepositoryMock;
 
     public UserRegisterServiceImplTest() {
         userRegisterRepositoryMock = Mockito.mock(UserRegisterRepository.class);
         verificationTokenRepositoryMock = Mockito.mock(VerificationTokenRepository.class);
-        userRegisterServiceImpl = new UserRegisterServiceImpl(userRegisterRepositoryMock,verificationTokenRepositoryMock);
+        userRegisterServiceImpl = new UserRegisterServiceImpl(userRegisterRepositoryMock,
+                verificationTokenRepositoryMock);
     }
 
 

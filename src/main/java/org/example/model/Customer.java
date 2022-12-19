@@ -55,7 +55,7 @@ public class Customer {
         this.wrongPasswordTrials = wrongPasswordTrials;
     }
 
-    public Customer(CustomerBuilder customerBuilder) {
+    private Customer(CustomerBuilder customerBuilder) {
         this.customerId = customerBuilder.customerId;
         this.firstName = customerBuilder.firstName;
         this.lastName = customerBuilder.lastName;
